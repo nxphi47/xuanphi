@@ -1,0 +1,8 @@
+install java openjdk-8-jre
+install 3 IDE
+install ltp to power computer to limit overheating
+install python-matplotlib, python-numpy, python-scipy, python-libsvm
+install ibus-unikey
+install git-all
+install google chrome
+
