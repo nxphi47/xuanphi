@@ -11,6 +11,11 @@ from sklearn.cross_validation import train_test_split, StratifiedShuffleSplit
 from sklearn.grid_search import GridSearchCV, RandomizedSearchCV
 from sklearn.metrics import classification_report
 from sklearn import datasets
+from sklearn.preprocessing import StandardScaler
+
+# from sonar sensing project
+import svmclassifier
+import utils
 
 
 ############
@@ -80,10 +85,10 @@ class SVMclassifer():
         else:
             cv = self.shuffle_split
         # set search parameter
-        self.rand_search_iter = 5
+        self.rand_search_iter = 40
         # training with grid search
         if self.search == 'grid':
-            self.model = GridSearchCV(SVC(), param_grid=param_set, cv=cv)
+            self.model = GridSearchCV(SVC(cache_size=1000), param_grid=param_set, cv=cv)
         else:
             self.model = RandomizedSearchCV(SVC(), n_iter=self.rand_search_iter, param_distributions=param_set)
 
@@ -133,6 +138,7 @@ def read_parser():
     parser.add_argument('-t', '-test_size', help="test_size", default='0.5', type=float)
     parser.add_argument('-d', '-data', help="data set", default='digits', choices=['digits'])
     parser.add_argument('-fig', '-config', help="the config file", default='phi_config.ini')
+    parser.add_argument('-kian', help="using kian soon svm", action='store_true', default=False)
     args = parser.parse_args()
     return args
 
@@ -189,8 +195,23 @@ def read_config(settings, filename):
     settings['predict'] = int(settings['predict'])
     settings['predict_random'] = int(settings['predict_random'])
 
+    # kernel
+    settings['kernel'] = [settings['kernel']]
+    # output graph:
+    settings['output_graph'] = bool(settings['output_graph'])
     return settings
 
+
+test_digits = np.array([
+    [0, 0, 0, 10, 10, 0, 0, 0],
+    [0, 0, 10, 10, 10, 0, 0, 0],
+    [0, 10, 0, 10, 10, 0, 0, 0],
+    [0, 0, 0, 10, 10, 0, 0, 0],
+    [0, 0, 0, 10, 10, 0, 0, 0],
+    [0, 0, 0, 10, 10, 0, 0, 0],
+    [0, 0, 0, 10, 10, 0, 0, 0],
+    [0, 0, 0, 10, 10, 0, 0, 0]
+])
 
 # main function
 if __name__ == '__main__':
@@ -199,21 +220,85 @@ if __name__ == '__main__':
     args = read_parser()
     read_config(settings, args.fig)
     update_settings(sys.argv[1:], args, settings)
-    print settings
+
+    # print settings
+    print "-----printing Settings --------------------"
+    for x in settings:
+        if x == 'c_range' or x == 'gamma_range':
+            print "%s :" % (x),
+            for val in settings[x]:
+                print "%.1g " % val,
+        else:
+            print x + ' : ' + str(settings[x])
+    print "-------------------------------------------"
     # create datasets based on arguments
     digits = datasets.load_digits()
     iris = datasets.load_iris()
-    sameples_set = []
+    samples_set = []
     labels_set = []
     if settings['data'] == 'digits':
         digits = datasets.load_digits()
-        sameples_set = digits.images.reshape((len(digits.images), -1))
+        samples_set = digits.images.reshape((len(digits.images), -1))
         labels_set = digits.target
 
-    # SVM train
+    # for kian soon test, take only the first 4 first feature
+    samples_set = samples_set[:, 30:45]
+    # scaling the datasets
+    # scaler = StandardScaler()
+    # sameples_set = scaler.fit_transform(sameples_set)
+    # print sameples_set[1]
+    # print "datasets scaled"
+    test_samples = samples_set[30:45]
+    test_labels = labels_set[30:45]
 
+    ##### svm_train part, getting the real training samples
+    samples_file = '/home/nxphi/Desktop/phiphi/testsklean/training.samples.20160518'
+    samples_set, labels_set, ids, all_labels, meta = utils.load_training_samples(samples_file, META=True, SMOOTH=True)
+    samples_set, samples_test, labels_set, labels_test = train_test_split(samples_set, labels_set, test_size=settings['test_size'])
+    # kian soon parameter set, using 2 exponent
+    cs = {'start': -20., 'end': 20., 'step': 4.}
+    gs = {'start': -20., 'end': 20., 'step': 4.}
+
+    # change C and g set to be the same as KS
+    C_range = []
+    gamma_range = []
+    for i in range(-20, 20, 4):
+        C_range.append(2. ** i)
+        gamma_range.append(2. ** i)
+    settings['c_range'] = C_range
+    settings['gamma_range'] = gamma_range
+    # SVM train
+    # kian soon machine
+    if args.kian:
+        print "Kien Soon algo selected"
+        model = svmclassifier.SVMClassifier('-q')
+        startTime = time.time()
+        best_para = model.cv_train(labels_set, samples_set)
+        duration = time.time() - startTime
+        print "Kian soon test timing: ", duration
+        print "best param: ", 2 ** best_para['c'], "and g : ", 2 ** best_para['g']
+        prediction = model.predict(samples_test)
+
+        print classification_report(labels_test, prediction)
+        # search for parameter set
+        samples_set = np.asarray(samples_set)
+        labels_set = np.asarray(labels_set)
+        print "shapes: ", samples_set.shape
+        parameter_set = [{'C': C_range, 'gamma': gamma_range}]
+
+        myMachine = GridSearchCV(SVC(kernel='rbf'), param_grid=parameter_set, cv=2)
+        startTime = time.time()
+        myMachine.fit(samples_set, labels_set)
+        durationSearch = time.time() - startTime
+        print "sklearn method: ", myMachine.best_params_
+        print "timing: ", durationSearch
+        pred = myMachine.predict(samples_test)
+        print classification_report(labels_test, pred)
+        exit(1)
+
+    # my machine
     machine = SVMclassifer(cv=settings['cross_valid'], search=settings['search_method'])
-    machine.get_problem(sameples_set, labels_set)
+    machine.get_problem(samples_set, labels_set)
     machine.setup_cross_valid(n_iter=settings['iteration'], test_size=settings['test_size'])
     timing = machine.train(C_set=settings['c_range'], gamma_set=settings['gamma_range'],
                            kernel_set=settings['kernel'])
@@ -223,18 +308,24 @@ if __name__ == '__main__':
     print "training timing = %.4f second" % (timing)
 
     # prediction
-    pred_size = settings['predict_random']
-    max_pred_val = np.random.randint(0,settings['predict'], pred_size)
-    y_pred = machine.predict(sameples_set[settings['predict']])
+    y_pred = machine.predict(samples_set)
 
+    print classification_report(labels_set, y_pred)
+    exit(1)
+    """
+    pred_size = settings['predict_random']
+    max_pred_val = np.random.randint(0, settings['predict'], pred_size)
+    y_pred = machine.predict(sameples_set[max_pred_val])
+    """
     # outputting to image
     # the test image
-    plot_dimension = np.ceil(np.sqrt(pred_size))
-    for k in xrange(pred_size):
-        plt.subplot(plot_dimension,plot_dimension,k+1)
-        plt.imshow(digits.images[max_pred_val[k]], cmap=plt.cm.gray_r, interpolation='nearest')
-        plt.title("Test: %d, predict: %d" % (digits.target[max_pred_val[k]], y_pred[k]))
+    if settings['output_graph']:
+        plot_dimension = np.ceil(np.sqrt(pred_size))
+        for k in xrange(pred_size):
+            plt.subplot(plot_dimension, plot_dimension, k + 1)
+            plt.imshow(digits.images[max_pred_val[k]], cmap=plt.cm.gray_r, interpolation='nearest')
+            plt.title("Test: %d, predict: %d" % (digits.target[max_pred_val[k]], y_pred[k]))
 
-    plt.show()
-    plt.savefig('/home/phi/Desktop/digits.png')
-    plt.close('all')
+        plt.show()
+        plt.savefig('/home/phi/Desktop/digits.png')
+        plt.close('all')

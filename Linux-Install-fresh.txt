@@ -5,4 +5,6 @@ install python-matplotlib, python-numpy, python-scipy, python-libsvm
 install ibus-unikey
 install git-all
 install google chrome
+disable touchpad: syndaemon -i 1 -K -d
+http://www.linuxandubuntu.com/home/how-to-disable-touchpad-while-writing-article-or-documentation-in-ubuntulinux-mint-or-derivatives-linux
 
