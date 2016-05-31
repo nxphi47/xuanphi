@@ -35,13 +35,16 @@ public class UserDepositMode extends Mode {
         return userAccount;
     }
 
-    public void setUserAccount(Account userAccount) {
-        if (userAccount != null) {
-            userAccount.setAuthorized(false);
+    public void setUserAccount(Account user) {
+        if (getUserAccount() != null){
+            getUserAccount().setAuthorized(false);
         }
-        this.userAccount = userAccount;
-        assert userAccount != null;
-        userAccount.setAuthorized(true);
+        if (user == null){
+            System.err.println("Show balance: input useraccount = null");
+            System.exit(1);
+        }
+        this.userAccount = user;
+        getUserAccount().setAuthorized(true);
     }
 
 

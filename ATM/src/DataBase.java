@@ -108,13 +108,18 @@ public class DataBase {
         return database.toString();
     }
 
-    public Account getAccount(int index){
-        return data.get(index);
-    }
     public Account getAccount(int num, String name){
         for (Account aData : data) {
             if (aData.getNumber() == num && aData.getName().equals(name)) {
                 return aData;
+            }
+        }
+        return null;
+    }
+    public Account getAccount(int num){
+        for (Account acc: data){
+            if (acc.getNumber() == num){
+                return acc;
             }
         }
         return null;

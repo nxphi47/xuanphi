@@ -18,31 +18,33 @@ public class UserMode extends Mode {
         return userAccount;
     }
 
-    public void setUserAccount(Account userAccount) {
-        if (userAccount != null){
-            userAccount.setAuthorized(false);
+    public void setUserAccount(Account user) {
+        if (getUserAccount() != null){
+            getUserAccount().setAuthorized(false);
         }
-        this.userAccount = userAccount;
-        assert userAccount != null;
-        userAccount.setAuthorized(true);
-        noti[0] = String.format("User: %s", userAccount.getName());
+        if (user == null){
+            System.err.println("Show balance: input useraccount = null");
+            System.exit(1);
+        }
+        this.userAccount = user;
+        getUserAccount().setAuthorized(true);
     }
 
     // constructor
     public UserMode(Account user, JTextArea textArea, JButton[] buttons){
         super(textArea, buttons);
         // user mode in specific
-        showBalanceMode = new UserShowBalanceMode(getUserAccount(), getText(), getButtons());
-        withdrawMode = new UserWithdrawMode(getUserAccount(), getText(), getButtons());
-        depositMode = new UserDepositMode(getUserAccount(), getText(), getButtons());
+        setUserAccount(user);
         // set the notification
         noti =new String[4];
+        noti[0] = String.format("User: %s", getUserAccount().getName());
         noti[1] = "Show balance? *";
         noti[2] = "Deposit? ";
         noti[3] = "Withdraw? ";
 
         option = 1;//show balance
-        setUserAccount(user);
+        getText().setText(getNoti());
+
 
         //handling the button
         for (JButton button: buttons){
@@ -54,9 +56,9 @@ public class UserMode extends Mode {
     }
 
     public void setOption(int choice){
-        for (String x: noti){
-            if (x.charAt(x.length() - 1) == '*'){
-                x = x.substring(0, x.length() - 1);
+        for (int i = 0; i < noti.length; i++){
+            if (noti[i].charAt(noti[i].length() - 1) == '*'){
+                noti[i] = noti[i].substring(0, noti[i].length() - 1);
             }
         }
         noti[choice] = noti[choice].concat("*");
@@ -69,12 +71,15 @@ public class UserMode extends Mode {
         switch (getOption()){
             case 1:
                 //show balance
+                showBalanceMode = new UserShowBalanceMode(getUserAccount(), getText(), getButtons());
                 showBalanceMode.execute();
                 break;
             case 2:
+                depositMode = new UserDepositMode(getUserAccount(), getText(), getButtons());
                 depositMode.execute();
                 break;
             case 3:
+                withdrawMode = new UserWithdrawMode(getUserAccount(), getText(), getButtons());
                 withdrawMode.execute();
                 break;
         }
@@ -98,22 +103,25 @@ public class UserMode extends Mode {
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals("Cancel")){
                 setExecuting(false);
+                getText().setText(getNoti());
             }
             else if (e.getActionCommand().equals("OK")){
                 optionExecute();
             }
             else if (e.getActionCommand().equals("^")){
                 // up
-                int choice = UserMode.this.option;
+                int choice = option;
                 choice -= 1;
                 if (choice <= 0) choice+=3;
                 setOption(choice);
+                getText().setText(getNoti());
             }
             else if (e.getActionCommand().equals("v")){
-                int choice = UserMode.this.option;
+                int choice = option;
                 choice += 1;
                 if (choice > 3) choice-=3;
                 setOption(choice);
+                getText().setText(getNoti());
             }
         }
     }
@@ -121,7 +129,9 @@ public class UserMode extends Mode {
     @Override
     public void execute() {
         // option pane
+        setEnabled(true);
         setExecuting(true);
         while (isExecuting());
+        setEnabled(false);
     }
 }

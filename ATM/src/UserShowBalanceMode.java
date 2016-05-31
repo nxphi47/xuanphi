@@ -23,6 +23,9 @@ public class UserShowBalanceMode extends Mode {
                             if (e.getActionCommand().equals("Cancel")){
                                 setExecuting(false);
                             }
+                            else {
+                                getText().setText(getUserAccount().showBalance() + "\nCancel to end");
+                            }
                         }
                     }
             );
@@ -33,19 +36,24 @@ public class UserShowBalanceMode extends Mode {
         return userAccount;
     }
 
-    public void setUserAccount(Account userAccount) {
-        if (userAccount != null){
-            userAccount.setAuthorized(false);
+    public void setUserAccount(Account user) {
+        if (getUserAccount() != null){
+            getUserAccount().setAuthorized(false);
         }
-        this.userAccount = userAccount;
-        assert userAccount != null;
-        userAccount.setAuthorized(true);
+        if (user == null){
+            System.err.println("Show balance: input user account = null");
+            System.exit(1);
+        }
+        this.userAccount = user;
+        getUserAccount().setAuthorized(true);
     }
 
     @Override
     public void execute() {
         setExecuting(true);
-        getText().setText(userAccount.showBalance() + "\nCancel to end");
-        while (isExecuting());
+        getText().setText(getUserAccount().showBalance() + "\nCancel to end");
+        while (isExecuting()){
+            System.out.printf("Showbalance going\n");
+        }
     }
 }
