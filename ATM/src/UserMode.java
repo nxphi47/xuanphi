@@ -6,46 +6,18 @@ import java.awt.event.ActionListener;
  * Created by phi on 31/05/16.
  */
 public class UserMode extends Mode {
-    private Account userAccount;
     private String[] noti;
     private int option;
-    // need the mode for show balance, deposit, withdraw
-    private UserShowBalanceMode showBalanceMode;
-    private UserWithdrawMode withdrawMode;
-    private UserDepositMode depositMode;
 
-    public Account getUserAccount() {
-        return userAccount;
-    }
-
-    public void setUserAccount(Account user) {
-        if (getUserAccount() != null){
-            getUserAccount().setAuthorized(false);
-        }
-        if (user == null){
-            System.err.println("Show balance: input useraccount = null");
-            System.exit(1);
-        }
-        this.userAccount = user;
-        getUserAccount().setAuthorized(true);
-    }
 
     // constructor
     public UserMode(Account user, JTextArea textArea, JButton[] buttons){
         super(textArea, buttons);
         // user mode in specific
-        setUserAccount(user);
-        // set the notification
-        noti =new String[4];
-        noti[0] = String.format("User: %s", getUserAccount().getName());
-        noti[1] = "Show balance? *";
-        noti[2] = "Deposit? ";
-        noti[3] = "Withdraw? ";
+    }
 
-        option = 1;//show balance
-        getText().setText(getNoti());
-
-
+    @Override
+    public void handlingButton() {
         //handling the button
         for (JButton button: buttons){
             for (ActionListener al: button.getActionListeners()){
@@ -53,6 +25,7 @@ public class UserMode extends Mode {
             }
             button.addActionListener(new ButtonHandler());
         }
+
     }
 
     public void setOption(int choice){
@@ -71,15 +44,19 @@ public class UserMode extends Mode {
         switch (getOption()){
             case 1:
                 //show balance
-                showBalanceMode = new UserShowBalanceMode(getUserAccount(), getText(), getButtons());
+                UserShowBalanceMode showBalanceMode = new UserShowBalanceMode(getUserAccount(), getText(), getButtons());
+                showBalanceMode.setSuperMode(this);
                 showBalanceMode.execute();
+                //showBalanceMode.execute();
                 break;
             case 2:
-                depositMode = new UserDepositMode(getUserAccount(), getText(), getButtons());
+                UserDepositMode depositMode = new UserDepositMode(getUserAccount(), getText(), getButtons());
+                depositMode.setSuperMode(this);
                 depositMode.execute();
                 break;
             case 3:
-                withdrawMode = new UserWithdrawMode(getUserAccount(), getText(), getButtons());
+                UserWithdrawMode withdrawMode = new UserWithdrawMode(getUserAccount(), getText(), getButtons());
+                withdrawMode.setSuperMode(this);
                 withdrawMode.execute();
                 break;
         }
@@ -102,8 +79,13 @@ public class UserMode extends Mode {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals("Cancel")){
-                setExecuting(false);
+                getUserAccount().setAuthorized(false);
                 getText().setText(getNoti());
+
+                // update the database in lockMode
+                LockMode lockMode = (LockMode) UserMode.this.getSuperMode();
+                lockMode.getDataBase().outputFile();
+                getSuperMode().execute();
             }
             else if (e.getActionCommand().equals("OK")){
                 optionExecute();
@@ -128,10 +110,20 @@ public class UserMode extends Mode {
 
     @Override
     public void execute() {
+        // set the notification
+        if (getUserAccount() == null){
+            System.err.printf("%s: Account not specified before execution", this.getClass());
+            System.exit(1);
+        }
+        noti =new String[4];
+        noti[0] = String.format("User: %s", getUserAccount().getName());
+        noti[1] = "Show balance? *";
+        noti[2] = "Deposit? ";
+        noti[3] = "Withdraw? ";
+
+        option = 1;//show balance
         // option pane
-        setEnabled(true);
-        setExecuting(true);
-        while (isExecuting());
-        setEnabled(false);
+        getText().setText(getNoti());
+        handlingButton();
     }
 }

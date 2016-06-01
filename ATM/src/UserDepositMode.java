@@ -7,7 +7,6 @@ import java.awt.geom.Arc2D;
  * Created by phi on 31/05/16.
  */
 public class UserDepositMode extends Mode {
-    private Account userAccount;
     private boolean depositing;
     private boolean deposited;
     private double amount;
@@ -22,6 +21,10 @@ public class UserDepositMode extends Mode {
         setDeposited(false);
         setDepositing(false);
         outputInfor = String.format("User %s\n", getUserAccount().getName());
+    }
+
+    @Override
+    public void handlingButton() {
         // handler for the buttons
         for (JButton button: buttons){
             for (ActionListener al: button.getActionListeners()){
@@ -29,24 +32,8 @@ public class UserDepositMode extends Mode {
             }
             button.addActionListener(new ButtonHandler());
         }
-    }
 
-    public Account getUserAccount() {
-        return userAccount;
     }
-
-    public void setUserAccount(Account user) {
-        if (getUserAccount() != null){
-            getUserAccount().setAuthorized(false);
-        }
-        if (user == null){
-            System.err.println("Show balance: input useraccount = null");
-            System.exit(1);
-        }
-        this.userAccount = user;
-        getUserAccount().setAuthorized(true);
-    }
-
 
     public boolean isDepositing() {
         return depositing;
@@ -87,21 +74,19 @@ public class UserDepositMode extends Mode {
     }
 
     public void start_deposit(){
-        setDepositing(true);
         outputInfor += "Deposit($): ";
         getText().setText(outputInfor);
-        while (isDepositing());
-        setDeposited(true);
+        handlingButton();
     }
 
     class ButtonHandler implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals("OK")){
-                getText().setText(userAccount.deposit(amount) + "\nPress Cancel");
+                getText().setText(getUserAccount().deposit(amount) + "\nPress Cancel");
             }
             else if (e.getActionCommand().equals("Cancel")){
-                setDepositing(false);
+                getSuperMode().execute();
             }
             else if (Character.isDigit(e.getActionCommand().charAt(0))){
                 inputAmount += e.getActionCommand().charAt(0);

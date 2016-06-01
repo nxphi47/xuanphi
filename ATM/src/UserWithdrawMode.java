@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
  * Created by phi on 31/05/16.
  */
 public class UserWithdrawMode extends Mode {
-    private Account userAccount;
     private boolean withdrawing;
     private double amount;
     private String inputAmount;
@@ -20,6 +19,10 @@ public class UserWithdrawMode extends Mode {
         setWithdrawing(false);
         outputInfor = String.format("User %s\n", getUserAccount().getName());
 
+    }
+
+    @Override
+    public void handlingButton() {
         // handling buttons
         for (JButton button: buttons){
             for (ActionListener al: button.getActionListeners()){
@@ -27,23 +30,9 @@ public class UserWithdrawMode extends Mode {
             }
             button.addActionListener(new ButtonHandler());
         }
+
     }
 
-    public Account getUserAccount() {
-        return userAccount;
-    }
-
-    public void setUserAccount(Account user) {
-        if (getUserAccount() != null){
-            getUserAccount().setAuthorized(false);
-        }
-        if (user == null){
-            System.err.println("Show balance: input useraccount = null");
-            System.exit(1);
-        }
-        this.userAccount = user;
-        getUserAccount().setAuthorized(true);
-    }
 
     public boolean isWithdrawing() {
         return withdrawing;
@@ -73,9 +62,10 @@ public class UserWithdrawMode extends Mode {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals("OK")) {
-                getText().setText(userAccount.deposit(amount) + "\nPress Cancel");
+                getText().setText(getUserAccount().withdraw(amount) + "\nPress Cancel");
             } else if (e.getActionCommand().equals("Cancel")) {
                 setWithdrawing(false);
+                getSuperMode().execute();
             } else if (Character.isDigit(e.getActionCommand().charAt(0))) {
                 inputAmount += e.getActionCommand().charAt(0);
                 getText().setText(outputInfor + inputAmount);
@@ -92,7 +82,7 @@ public class UserWithdrawMode extends Mode {
         setWithdrawing(true);
         outputInfor += "Withdraw ($): ";
         getText().setText(outputInfor);
-        while (isWithdrawing());
+        handlingButton();
     }
 
     @Override

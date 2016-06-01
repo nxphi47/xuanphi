@@ -7,6 +7,5 @@ public class Main {
 	// write your code here
         ATM frame =new ATM();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.execute();
     }
 }

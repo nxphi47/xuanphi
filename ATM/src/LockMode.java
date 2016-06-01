@@ -8,10 +8,10 @@ import java.awt.event.ActionListener;
 public class LockMode extends Mode implements Notification{
     private String accNumber;
     private String pass;
+    private String hiddenPass;
     private DataBase dataBase;
     private boolean unlocked;
     private boolean foundAcc;
-    private Account account;
 
     public String getAccNumber() {
         return accNumber;
@@ -53,7 +53,11 @@ public class LockMode extends Mode implements Notification{
         setEnabled(false);
         setAccNumber("");
         setPass("");
+        getText().setText(getNoti(""));
+    }
 
+    @Override
+    public void handlingButton() {
         // handling the button
         for (JButton button :buttons) {
             for (ActionListener al: button.getActionListeners()){
@@ -73,16 +77,15 @@ public class LockMode extends Mode implements Notification{
 
     @Override
     public void execute() {
-        setEnabled(true);
-        // printing to the text area
-        getText().setText(getNoti(""));
-        while (!isFoundAcc()){
-            System.out.printf("Looking for acc\n");
-        }
-        while (!isUnlocked() && isFoundAcc()){
-            System.out.printf("Password???\n");
-        }
+
+        setFoundAcc(false);
+        setUnlocked(false);
         setEnabled(false);
+        setAccNumber("");
+        setPass("");
+        getText().setText(getNoti(""));
+        handlingButton();
+        //while (!isUnlocked()) System.out.printf("");
     }
 
 
@@ -93,7 +96,11 @@ public class LockMode extends Mode implements Notification{
             noti += "Enter Account No.: " + accNumber;
         }
         else if (!isUnlocked() && isFoundAcc()){
-            noti += String.format("User: %s\n", account.getName()) + "Enter Password: " + pass;
+            hiddenPass = "";
+            while (hiddenPass.length() < pass.length()){
+                hiddenPass += "*";
+            }
+            noti += String.format("User: %s\n", getUserAccount().getName()) + "Enter Password: " + hiddenPass;
         }
         else {
             noti += "Unlocked but not respones(ERROR)";
@@ -102,13 +109,6 @@ public class LockMode extends Mode implements Notification{
         return noti;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 
     class ButtonHandler implements ActionListener{
         @Override
@@ -130,15 +130,20 @@ public class LockMode extends Mode implements Notification{
                 }
                 else if (e.getActionCommand().equals("OK")){
                     // confirm
-                    account = dataBase.getAccount(Integer.parseInt(accNumber));
-                    if (account == null){
-                        // not found in the system
-                        getText().setText(getNoti("Number incorrect"));
+                    if (accNumber.length() != 0) {
+                        setUserAccount(dataBase.getAccount(Integer.parseInt(accNumber)));
+
+                        if (getUserAccount() == null) {
+                            // not found in the system
+                            getText().setText(getNoti("Number incorrect"));
+                        } else {
+                            setFoundAcc(true);
+                            getText().setText(getNoti(""));
+                        }
                     }
-                    else {
-                        setFoundAcc(true);
-                        getText().setText(getNoti(""));
-                    }
+                }
+                else if (e.getActionCommand().equals("Cancel")){
+                    System.exit(0);
                 }
             }
             else if (!isUnlocked() && isFoundAcc()){
@@ -157,15 +162,24 @@ public class LockMode extends Mode implements Notification{
                 }
                 else if (e.getActionCommand().equals("OK")){
                     // confirm pass
-                    if (account.getPassword().equals(pass)){
+                    if (getUserAccount().getPassword().equals(pass)){
                         // access to acocunt
                         setUnlocked(true);
-                        account.setAuthorized(true);
+                        getUserAccount().setAuthorized(true);
+                        getSuperMode().setUserAccount(getUserAccount());
+                        getSuperMode().execute();
                     }
                     else {
                         // wrong password
                         getText().setText(getNoti("Password incorrect"));
                     }
+                }
+                else if (e.getActionCommand().equals("Cancel")){
+                    setFoundAcc(false);
+                    accNumber = "";
+                    pass = "";
+                    setUserAccount(null);
+                    getText().setText(getNoti(""));
                 }
             }
         }
