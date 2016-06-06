@@ -13,14 +13,14 @@ import java.util.concurrent.atomic.DoubleAccumulator;
  */
 public class DataBase {
     private ArrayList<Account> data; // further develop, sort the number and use binarysearch
-    private static int count;
+    private int count;
     private File file;
     private String fileName;
     private Scanner input;
     private Formatter output;
 
     public DataBase(String fileName){
-        data = new ArrayList<Account>();
+        data = new ArrayList<>();
 
         this.fileName = fileName;
         file = new File(this.fileName);
@@ -34,7 +34,7 @@ public class DataBase {
     }
 
     public void inputFile(){
-        // account = 1234 [gnuyen xuan phi] {123456} 456.2
+        // account = 1234 [nguyen xuan phi] {123456} 456.2
         if (input == null){
             try {
                 input = new Scanner(file);
@@ -73,10 +73,8 @@ public class DataBase {
         // starting outputing
         try {
             for (int i = 0; i < data.size(); i++){
-                Account acc = data.get(i);
-                output.format("%-6d[%s] {%s} %f\n", acc.getNumber(), acc.getName(), acc.getBalance(),
-                        acc.getBalance());
-
+                output.format("%-6d[%s] {%s} %f\n", data.get(i).getNumber(), data.get(i).getName(), data.get(i).getPassword(),
+                        data.get(i).getBalance());
             }
         } catch (IndexOutOfBoundsException e1){
             System.err.println("Arraylist out of bound when output file");
@@ -84,6 +82,7 @@ public class DataBase {
             System.err.println("Error when output the file");
             System.exit(1);
         }
+        output.close();
     }
 
     public String getDataBase(){
@@ -123,5 +122,13 @@ public class DataBase {
             }
         }
         return null;
+    }
+
+    public void updateDatabase(Account acc){
+        for (int i = 0; i < data.size(); i++){
+            if (data.get(i) == acc){
+
+            }
+        }
     }
 }

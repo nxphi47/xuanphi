@@ -10,6 +10,7 @@ public class ATM extends JFrame {
     private LockMode lockMode;
     private Account account;
     private DataBase dataBase;
+
     private JTextArea textArea;
     private Keypad keypad;
 
@@ -31,11 +32,16 @@ public class ATM extends JFrame {
         dataBase = new DataBase("dataBase.txt");
         display();
         lockMode = new LockMode(dataBase, textArea, keypad.getButtons());
+        userMode = new UserMode(lockMode.getUserAccount(), textArea, keypad.getButtons());
+        lockMode.setSuperMode(userMode);
+        userMode.setSuperMode(lockMode);
+        lockMode.execute();
+
     }
 
     public void execute(){
         lockMode.execute();
-        account = lockMode.getAccount();
+        account = lockMode.getUserAccount();
 
         if (account == null){
             System.err.println("Error, lockmode get null account");
