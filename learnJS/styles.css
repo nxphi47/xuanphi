@@ -1,0 +1,97 @@
+.backgroundImg{
+    width: 200px;
+    height: 100px;
+    border: outset;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+header{
+    font-family: "DejaVu Sans";
+    font-size: 300%;
+    text-align: center;
+    background-color: transparent;
+    color: brown;
+}
+
+body{
+    background: url("background3.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+footer{
+    text-align: center;
+    width: 100%;
+    height: 30px;
+    background-color: darkslategrey;
+    color: azure;
+    padding: 10px;
+}
+
+footer a:link{
+    color: yellow;
+}
+
+footer a:hover{
+    color: brown;
+}
+
+ul{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li{
+    float: left;
+}
+li p{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 15px 15px;
+    text-decoration: none;
+}
+
+li p:hover{
+    background-color: #4CAF50;
+}
+
+#content{
+    width: 100%;
+    height: 500px;
+}
+#display{
+    width: 100%;
+    height: 300px;
+}
+
+
+table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 150%;
+}
+table{
+    width: 50%;
+}
+td.label{
+    background-color: #210ebd;
+    color: aliceblue;
+}
+td.value{
+    background-color: white;
+    color: black;
+    text-align: center;
+}
+
+.log{
+    margin: 0;
+    font-size: 100%;
+    background-color: white;
+}

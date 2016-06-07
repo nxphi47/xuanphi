@@ -8,12 +8,63 @@
 </head>
 <body background="background.jpg">
 
-<header>Phi's Website: game and information</header>
-<nav>
-    <a href="https://www.google.com" target="_blank">GOOGLE</a>
-    <a href="https://www.youtube.com" target="_blank">YOUTUBE</a>
-    <a href="https://www.facebook.com" target="_blank">FACEBOOK</a>
-</nav>
+<header>Website</header>
+<div id="changeBackround">
+    <fieldset id="changeBack">
+        <legend>Change the background</legend>
+        <img src="background.jpg" class="backgroundImg" onmouseover="changeBackground.imageHover(this)"
+        onmouseout="changeBackground.imageOutHover(this)" onclick="changeBackground.imageChange(this)">
+        <img src="background2.png" class="backgroundImg" onmouseover="changeBackground.imageHover(this)"
+        onmouseout="changeBackground.imageOutHover(this)" onclick="changeBackground.imageChange(this)">
+        <img src="background3.jpg" class="backgroundImg" onmouseover="changeBackground.imageHover(this)"
+        onmouseout="changeBackground.imageOutHover(this)" onclick="changeBackground.imageChange(this)">
+    </fieldset>
+</div>
+
+<hr>
+<ul>
+    <li><p id="personal" onclick="changeContent.personalInit()">Personal information</p></li>
+    <li><p id="general">General Information</p></li>
+    <li><p id="game">Game</p></li>
+</ul>
+
+<div id="content"></div>
+<hr>
+<div id="display"></div>
+<hr>
+<table align="center">
+    <tr>
+        <td class="label">Status</td>
+        <td class="value">Burst</td>
+    </tr>
+    <tr>
+        <td class="label">Curb</td>
+        <td class="value" onclick="curbChangeValue(this)">10cm</td>
+    </tr>
+    <tr>
+        <td class="label">Distance</td>
+        <td class="value">4m</td>
+    </tr>
+    <tr>
+        <td class="label" align="center" colspan="2">Log</td>
+    </tr>
+    <tr>
+        <td colspan="2" class="log">
+                hello every one <br>
+                my name is somehtinbr <br>
+                adjsadsadsadsadsad <br>
+                adadsada <br>
+        </td>
+    </tr>
+</table>
+<hr>
+<script>
+    realtime.init();
+</script>
+<footer>
+    Phi's website &copy; &trade;<br>
+    contact: <a href="mailto:nxphi47@gmail.com">nxphi47@gmail.com</a>
+</footer>
 
 </body>
 </html>
