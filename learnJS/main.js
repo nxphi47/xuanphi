@@ -142,6 +142,13 @@ var realtime = {
         this.div = document.getElementById("display");
         this.table = document.createElement("table");
         this.table.align = "center";
+        
+        var caption = document.createElement("caption");
+        caption.id = "caption";
+        caption.innerHTML = "RealTime demo";
+        caption.style.fontSize = "200%";
+        caption.style.backgroundColor = "#210ebd";
+        caption.style.color = "white";
 
         // statusRow row
         this.statusRow = document.createElement("tr");
@@ -166,6 +173,10 @@ var realtime = {
         this.curbVal.className = "value";
         this.curbVal.innerHTML = "5 cm"; //  change according to....
         // need to add the default style and change of style
+        //noinspection JSValidateTypes
+        this.curbVal.addEventListener("click", function () {
+            curbChangeValue(this);
+        });
         this.curbRow.appendChild(this.curbVal);
 
 
@@ -182,7 +193,7 @@ var realtime = {
         // need to add the changing or value
         this.distRow.appendChild(this.distVal);
 
-        // log row
+        // logTd row
         var logRow = document.createElement("tr");
         var logLabel = document.createElement("td");
         logLabel.className = "label";
@@ -191,15 +202,32 @@ var realtime = {
         logLabel.align = "center";
         logRow.appendChild(logLabel);
 
-        // log val
+        // logTd val
         this.logValRow = document.createElement("tr");
-        this.log = document.createElement("td");
+        this.logTd = document.createElement("td");
+        this.logTd.className = "logTd";
+        this.logTd.colSpan = "2";
+        this.log = document.createElement("textarea");
         this.log.className = "log";
-        this.log.colSpan = "2";
-        this.log.innerHTML = "Hello world";
-        this.logValRow.appendChild(this.log);
+        this.log.value = "asdjkasldjklajklw\n" +
+            "akwjdawjdlkawjdlakwdjwalk fwaidjawidjawd\n" +
+            "aslkdjakljda\n" +
+            "dkajdjwiaofjawj \nadawjddawdjkawdjawkldj\n" +
+            "dawjdkawjdjaiodjawoidjawiodjawio\n" +
+            "adklajwkdjawajwk fljawfioaw\n" +
+            "awkjdawjdlkawjdklawjdklawjdkawljdkawjdkalwjdawljdalwkjd\n" +
+            "wankaw jawja wjowj waopjf \n";
+        this.log.rows = "10";
+        this.log.cols = "60";
+        this.log.disabled = "disabled";
+        this.log.style.resize = "none";
+
+        this.logTd.appendChild(this.log);
+        this.logValRow.appendChild(this.logTd);
+
 
         // add the the table
+        this.table.appendChild(caption);
         this.table.appendChild(this.statusRow);
         this.table.appendChild(this.curbRow);
         this.table.appendChild(this.distRow);
@@ -216,19 +244,34 @@ var realtime = {
         table.style.border = "1px solid black";
         table.style.borderCollapse = "collapse";
         table.style.fontSize =  "150%";
-        table.style.width = "50%";
+        table.style.width = "500px";
 
         var td = document.getElementsByTagName("td");
-        console.log(td);
-        for (var x in td){
-            x.style.border = "1px solid black";
-            x.style.borderCollapse = "collapse";
-            x.style.fontSize = "150%";
-            x.style.backgroundColor = "white";
+        for (var i = 0; i < td.length; i++){
+            td.item(i).style.border = "1px solid black";
+            td.item(i).style.borderCollapse = "collapse";
+            td.item(i).style.fontSize = "150%";
         }
 
-
+        var tdLabel = document.getElementsByClassName("label");
+        for (var i = 0; i < tdLabel.length; i++){
+            tdLabel.item(i).style.backgroundColor = "#210ebd";
+            tdLabel.item(i).style.color = "aliceblue";
+        }
+        var tdValue = document.getElementsByClassName("value");
+        for (var i = 0; i < tdValue.length; i++){
+            tdValue.item(i).style.backgroundColor = "white";
+            tdValue.item(i).style.color = "black";
+            tdValue.item(i).style.textAlign = "center";
+        }
+        /*
+        var log = document.getElementsByClassName("log");
+        log.item(0).style.margin = "0";
+        log.item(0).style.fontSize = "75%";
+        log.item(0).style.backgroundColor = "white";
+        */
     }
 
+    
 
 };
