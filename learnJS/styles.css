@@ -59,13 +59,14 @@ li p{
 }
 
 li p:hover{
-    background-color: #4CAF50;
+    background-color: saddlebrown;
 }
 
 #content{
     width: 100%;
     height: 500px;
 }
+/*
 #display{
     width: 100%;
 }

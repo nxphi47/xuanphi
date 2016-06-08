@@ -32,6 +32,8 @@
 <hr>
 <div id="display"></div>
 <hr>
+
+<p id="time"></p>
 <!--
 <table align="center">
     <caption>Hello world</caption>
@@ -74,6 +76,22 @@
 -->
 <script>
     realtime.init();
+    window.setTimeout(function () {
+        realtime.showUpdateRealTime(true, "10", "3.01");
+    }, 2000);
+    window.setTimeout(function () {
+        realtime.showUpdateRealTime(true, "5", "4.01");
+    }, 4000);
+    window.setTimeout(function () {
+        realtime.showUpdateRealTime(true, "15", "2.01");
+    }, 6000);
+    window.setTimeout(function () {
+        realtime.showUpdateRealTime(true, "none", "0");
+    }, 8000);
+    window.setTimeout(function () {
+        realtime.showUpdateRealTime(true, "unknown", "0");
+    }, 10000);
+
 </script>
 <footer>
     Phi's website &copy; &trade;<br>
