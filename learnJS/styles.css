@@ -49,12 +49,14 @@ ul{
 
 li{
     float: left;
+    margin: 0px;
 }
 li p{
     display: block;
     color: white;
     text-align: center;
     padding: 15px 15px;
+    margin: 0px;
     text-decoration: none;
 }
 
@@ -65,7 +67,11 @@ li p:hover{
 #content{
     width: 100%;
     height: 500px;
+	margin: auto;
+	align-items: center;
+	align-self: center;
 }
+
 /*
 #display{
     width: 100%;

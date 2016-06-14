@@ -68,37 +68,44 @@ var changeContent = {
         country.pattern = "[A-Z]{3}";
         country.placeholder = "VNM";
 
-        var genderText = document.createTextNode("Gender: ");
-        var gender = [];
-        for (var i = 0; i < 2; i++) {
-            var gen = document.createElement("input");
-            gen.type = "radio";
-            gen.value = (i == 0) ? "male" : "female";
-            gen.innerHTML = (i == 0) ? "Male" : "Female";
-            gender.concat(gen);
-        }
+        var gender = $("<form></form>").html("Gender: <input type='radio' name='gender' value='male' checked>" +
+			" Male <input type='radio' name='gender' value='female'> Female ");
 
         personalFieldset.appendChild(firstText);
         personalFieldset.appendChild(first);
+        personalFieldset.appendChild(makeBr());
         personalFieldset.appendChild(lastText);
         personalFieldset.appendChild(last);
         personalFieldset.appendChild(makeBr());
         personalFieldset.appendChild(agetext);
         personalFieldset.appendChild(age);
+        personalFieldset.appendChild(makeBr());
         personalFieldset.appendChild(countryText);
         personalFieldset.appendChild(country);
         personalFieldset.appendChild(makeBr());
-        personalFieldset.appendChild(genderText);
-
+		$(personalFieldset).append(gender);
         personalFieldset.appendChild(legend);
         // finish personal fieldset
 
+		// education information
+		var eduFieldset = $("<fieldset id='edu'></fieldset>").html("<legend>Education</legend>" +
+			"High School: <input name='highschool' type='text' placeholder='Phan Chau trinh'><br>" +
+			"University: <input name='uni' type='text' placeholder='NTU'><br>" +
+			"Major: " +
+			"<select>" +
+			"<option value='EEE'>EEE</option>" +
+			"<option value='SCE'>SCE</option>" +
+			"<option value='MASS'>MASS</option>" +
+			" </select> <br> <form oninput='outGPA.value=parseFloat(gpa.value)'>" +
+			"CGPA: <input name='GPA' type='range' min='0' max='5' step='0.1' value='3.5' id='gpa'> = " +
+			"<output name='outGPA' for='gpa' ></output></form>");
         // submit button
         var submit = document.createElement("input");
         submit.type = "submit";
         submit.value = "Submit";
 
         form.appendChild(personalFieldset);
+		$(form).append(eduFieldset);
         form.appendChild(submit);
         // finish formaking
         division.appendChild(form);
@@ -348,16 +355,5 @@ var realtime = {
             log += "found curb " + curb + " at " + dist + " m";
         }
         realtime.updateLog(log)
-
     }
 };
-
-function getTime() {
-    var time1 = new Date().getTime();
-    var time2 = new Date().getTimezoneOffset();
-    var time3 = new Date().getUTCHours();
-    var time4 = new Date();
-    var output = document.getElementById("time");
-    output.innerHTML = time1 + "<br>" + time2 + "<br>" + time3 + "<br>" +
-        time4.toTimeString().substring(0, 8);
-}
