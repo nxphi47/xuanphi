@@ -219,7 +219,7 @@ var snake = {
 			console.log("KeyHandle: error, this.div undefined");
 			return;
 		}
-		snake.div.addEventListener('keydown', function (e) {
+		snake.div.addEventListener('keyup', function (e) {
 			var key = getKey(e);
 			if (key != "none" && checkOposite(snake.directQueue[-1], key)){
 				snake.directQueue.push(key);
@@ -228,28 +228,30 @@ var snake = {
 		})
 	},
 	runLoop: function () {
-		window.setInterval(this.run, snake.speed);
+		this.loop = window.setInterval(snake.run, snake.speed);
 	},
 
 	// to be repeated
 	run: function () {
 		var direction;
-		do {
+		while (snake.directQueue.length > 0){
 			var x = snake.directQueue.shift();
-			if (checkOposite(this.direction, x)){
-				this.direction = x;
+			console.log("x = " + x);
+			if (checkOposite(snake.direction, x)){
+				snake.direction = x;
 				break;
 			}
-		}while (true);
-		var fail = snake.move(this.direction);
+		}
+
+		var fail = snake.move(snake.direction);
 		if (fail == false){
 			console.log("stop");
-			window.clearInterval(this.run);
+			// while it is not stopped
+			window.clearInterval(snake.loop);
 		}
 		//food.autoGenerate();
-	}
-
-
+	},
+	
 };
 
 var food = {
