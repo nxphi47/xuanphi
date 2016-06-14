@@ -97,22 +97,16 @@ var snake = {
 	len: 2,
 	color: "white",
 	list: [],
-	direction: "left",
-	speed: 300,
+	direction: "right",
+	directQueue: [],
+	speed: 100,
 	init: function () {
 		this.div = document.getElementById("snakeBoard");
 
 		// create initial snake with 2 Dot
 		this.list.unshift(new Dot(0, 0, this.color, this.div));
 		this.list.unshift(new Dot(1, 0, this.color, this.div));
-		this.list.unshift(new Dot(2, 0, this.color, this.div));
-		this.list.unshift(new Dot(3, 0, this.color, this.div));
-		this.list.unshift(new Dot(4, 0, this.color, this.div));
-		this.list.unshift(new Dot(5, 0, this.color, this.div));
-		this.list.unshift(new Dot(6, 0, this.color, this.div));
-		this.list.unshift(new Dot(7, 0, this.color, this.div));
-		this.list.unshift(new Dot(8, 0, this.color, this.div));
-		this.list.unshift(new Dot(9, 0, this.color, this.div));
+
 
 		// update the state of the snake
 		this.updateState();
@@ -227,8 +221,9 @@ var snake = {
 		}
 		snake.div.addEventListener('keydown', function (e) {
 			var key = getKey(e);
-			if (key != "none" && checkOposite(snake.direction, key)){
-				snake.direction = key;
+			if (key != "none" && checkOposite(snake.directQueue[-1], key)){
+				snake.directQueue.push(key);
+				console.log("Keys: " + snake.directQueue);
 			}
 		})
 	},
@@ -238,7 +233,15 @@ var snake = {
 
 	// to be repeated
 	run: function () {
-		var fail = snake.move(snake.direction);
+		var direction;
+		do {
+			var x = snake.directQueue.shift();
+			if (checkOposite(this.direction, x)){
+				this.direction = x;
+				break;
+			}
+		}while (true);
+		var fail = snake.move(this.direction);
 		if (fail == false){
 			console.log("stop");
 			window.clearInterval(this.run);
@@ -340,10 +343,5 @@ function checkOposite(key1, key2) {
 	else if (key1 == "up" && key2 == "down"){
 		return false;
 	}
-	else if (key1 == "down" && key2 == "up"){
-		return false;
-	}
-	else {
-		return true;
-	}
+	else return !(key1 == "down" && key2 == "up");
 }
