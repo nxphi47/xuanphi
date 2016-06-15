@@ -9,26 +9,24 @@
 
 	<title>Phi's website</title>
 </head>
-<body background="background.jpg">
+<body background="background.jpg" style="background-attachment: fixed">
 
 <header>Website</header>
 <div id="changeBackround">
 	<fieldset id="changeBack">
 		<legend>Change the background</legend>
-		<img src="background.jpg" class="backgroundImg" onmouseover="changeBackground.imageHover(this)"
-			 onmouseout="changeBackground.imageOutHover(this)" onclick="changeBackground.imageChange(this)">
-		<img src="background2.png" class="backgroundImg" onmouseover="changeBackground.imageHover(this)"
-			 onmouseout="changeBackground.imageOutHover(this)" onclick="changeBackground.imageChange(this)">
-		<img src="background3.jpg" class="backgroundImg" onmouseover="changeBackground.imageHover(this)"
-			 onmouseout="changeBackground.imageOutHover(this)" onclick="changeBackground.imageChange(this)">
+		<img src="background.jpg" class="backgroundImg" onclick="changeBackground.imageChange(this)">
+		<img src="background2.png" class="backgroundImg" onclick="changeBackground.imageChange(this)">
+		<img src="background3.jpg" class="backgroundImg" onclick="changeBackground.imageChange(this)">
 	</fieldset>
 </div>
 
 <hr>
 <ul>
-	<li><p id="personal" onclick="changeContent.personalInit()">Personal information</p></li>
-	<li><p id="general">General Information</p></li>
-	<li><p id="game"  onclick="snakeInit()">Game</p></li>
+	<li><a class="option" name="option" id="personal" onclick="changeContent.personalInit()">Personal information</a></li>
+	<li><a class="option" name="option" id="general">General Information</a></li>
+	<li><a class="option" name="option" id="snake" onclick="changeContent.snakeInit()">Game Snake</a></li>
+	<li style="float: right"><a class="about">About</a></li>
 </ul>
 
 <div id="content"></div>
