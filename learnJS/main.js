@@ -45,6 +45,8 @@ var changeContent = {
 		// form making
 		var form = document.createElement("form");
 		form.style.backgroundColor = "white";
+		form.action="/usr/lib/cgi-bin/cgi_handle.py";
+		form.method = "get";
 
 		//personal fieldset
 		var personalFieldset = document.createElement("fieldset");
@@ -56,12 +58,14 @@ var changeContent = {
 		first.type = "text";
 		first.required = "required";
 		first.placeholder = "Xuan Phi";
+		first.name = "fname";
 
 		var lastText = document.createTextNode("Last name: ");
 		var last = document.createElement("input");
 		last.type = "text";
 		last.required = "required";
 		last.placeholder = "Nguyen";
+		last.name = "lname";
 
 		var agetext = document.createTextNode("your age: ");
 		var age = document.createElement("input");
@@ -70,6 +74,7 @@ var changeContent = {
 		age.defaultValue = "20";
 		age.min = "1";
 		age.max = "100";
+		age.name = "age";
 
 		var countryText = document.createTextNode("Nationality: ");
 		var country = document.createElement("input");
@@ -77,6 +82,7 @@ var changeContent = {
 		country.required = "required";
 		country.pattern = "[A-Z]{3}";
 		country.placeholder = "VNM";
+		country.name = "country"
 
 		var gender = $("<form></form>").html("Gender: <input type='radio' name='gender' value='male' checked>" +
 			" Male <input type='radio' name='gender' value='female'> Female ");
@@ -97,7 +103,7 @@ var changeContent = {
 		personalFieldset.appendChild(legend);
 		// finish personal fieldset
 
-		// education information
+		// education information fieldset
 		var eduFieldset = $("<fieldset id='edu'></fieldset>").html("<legend>Education</legend>" +
 			"High School: <input name='highschool' type='text' placeholder='Phan Chau trinh'><br>" +
 			"University: <input name='uni' type='text' placeholder='NTU'><br>" +
@@ -109,6 +115,7 @@ var changeContent = {
 			" </select> <br> <form oninput='outGPA.value=parseFloat(gpa.value)'>" +
 			"CGPA: <input name='GPA' type='range' min='0' max='5' step='0.1' value='3.5' id='gpa'> = " +
 			"<output name='outGPA' for='gpa' ></output></form>");
+		
 		// submit button
 		var submit = document.createElement("input");
 		submit.type = "submit";
@@ -168,6 +175,32 @@ var changeContent = {
 		// slidedown animation
 		$(division).slideDown(this.slideSpeed);
 	},
+
+	backgroundInit: function () {
+		var division = document.getElementById("content");
+		this.activeOption("background");
+		// slide up animation if the content have childnodes
+		if (this.animateSlideUp("background")){
+			return;
+		}
+		// remove all child nodes
+		$(division).html("");
+		division.tabIndex = '0';
+
+		// creating content -------------------------------------------------
+		$(division).html("<fieldset id='changeBack'>" +
+			"<legend>Change the Background</legend>" +
+			"<img src='background.jpg' class='backgroundImg' onclick='changeBackground.imageChange(this)'>" +
+			"<img src='background2.png' class='backgroundImg' onclick='changeBackground.imageChange(this)'>" +
+			"<img src='background3.jpg' class='backgroundImg' onclick='changeBackground.imageChange(this)'>" +
+			"</fieldset>");
+
+		// Done creating content --------------------------------------------
+
+		// slidedown animation
+		$(division).slideDown(this.slideSpeed);
+	},
+
 	statusInit: {},
 
 	animateSlideUp: function (mode) {

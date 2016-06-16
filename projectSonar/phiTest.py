@@ -1,54 +1,24 @@
+import socket  # for socket
+import sys
+
 try:
-    from svmutil import *
-except:
-    from libsvm.svmutil import *
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	print "Socket successfully created"
+except socket.error as err:
+	print "socket creation failed with error %s" % (err)
 
-matrix = [
-    [0, 0, 0, 3, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 3, 3, 0],
-    [0, 0, 0, 0, 0, 0, 3, 0],
-    [0, 1, 0, 2, 2, 0, 0, 0],
-    [0, 0, 0, 2, 2, 0, 0, 0],
-    [0, 0, 0, 0, 2, 0, 0, 0],
-    [0, 0, 0, 0, 2, 0, 0, 0]
-]
+# default port for socket
+port = 80
 
-samples = []
-labels = []
+try:
+	host_ip = socket.gethostbyname('www.vnexpress.net')
+except socket.gaierror:
+	# this means could not resolve the host
+	print "there was an error resolving the host"
+	sys.exit()
 
-#get labels with samples
+# connecting to the server
+s.connect((host_ip, port))
 
-for i in range(len(matrix)):
-    for j in range(len(matrix)):
-        if matrix[i][j] != 0:
-            labels.append(matrix[i][j])
-            samples.append([i, j])
-
-problem = svm_problem(labels, samples)
-param = svm_parameter('-s 0 -t 2 -q')
-
-model = svm_train(problem, param)
-test_label = [1,1,3,1]
-test_sample = [
-    [0,0],
-    [0,1],
-    [2,7],
-    [4,2]
-]
-
-
-pred_label, pre_acc, pre_val = svm_predict(test_label, test_sample, model)
-print pred_label
-
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-
-time = np.arange(0.,5.,0.2)
-exp = []
-for t in time:
-    exp.append(math.exp(t))
-
-plt.plot(time, 1/time,'r', time, time, 'b', time, exp, 'g')
-plt.show()
+print "the socket has successfully connected to google \
+on port == %s" % (host_ip)
