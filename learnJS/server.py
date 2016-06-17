@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import socket
 import sys
 import time
@@ -91,6 +93,15 @@ def generateHTTPserver():
 	httpd = httpServer(addressHTTP, cgiHandler)
 	print "Start generate HTTP server"
 	httpd.serve_forever()
+
+# Chat application -----------------------
+# When the User get the chat app from http, the CGI will as the server to create a socket
+# correspond to the html client and return the IP address to the user at HTML
+# $$ another user open the html and make the CGI make a new socket and return the socket IP
+# then any of those connect to the IP addess, so that 2 html client communicate under the control of
+# 2 socket via the server
+# --------------------------------------
+
 
 
 if __name__ == '__main__':

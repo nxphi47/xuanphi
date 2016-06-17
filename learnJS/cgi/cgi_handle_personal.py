@@ -3,7 +3,6 @@
 # Import modules for CGI handling 
 import cgi, cgitb
 import os
-
 # Create instance of FieldStorage 
 form = cgi.FieldStorage()
 
@@ -15,7 +14,7 @@ lname = form.getvalue('lname')
 fileItem = form['filename']
 if fileItem.filename:
 	fn = os.path.basename(fileItem.filename)
-	open("/home/phi/Desktop/" + fn, 'wb').write(fileItem.file.read())
+	open("/home/nxphi/Desktop/" + fn, 'wb').write(fileItem.file.read())
 	mess = "File '" + fn + "' was uploaded successfully"
 else:
 	mess = "No File uploaded"
@@ -34,7 +33,6 @@ print "</html>"
 """
 
 template = """
-Content-type:text/html\r\n\r\n
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -52,13 +50,13 @@ Content-type:text/html\r\n\r\n
 """
 
 htmlList = template.split("@@")
-for txt in htmlList:
-	if txt == "fname":
-		txt = fname
-	elif txt == "lname":
-		txt = lname
-	elif txt == "file":
-		txt = mess
+for i in xrange(len(htmlList)):
+	if htmlList[i] == "fname":
+		htmlList[i] = fname
+	elif htmlList[i] == "lname":
+		htmlList[i] = lname
+	elif htmlList[i] == "file":
+		htmlList[i] = mess
 	else:
 		pass
 
@@ -67,4 +65,6 @@ for txt in htmlList:
 	output += txt
 
 # output
+print "Content-type:text/html\r\n\r\n"
+
 print output
