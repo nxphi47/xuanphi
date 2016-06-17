@@ -45,8 +45,10 @@ var changeContent = {
 		// form making
 		var form = document.createElement("form");
 		form.style.backgroundColor = "white";
-		form.action="/usr/lib/cgi-bin/cgi_handle.py";
-		form.method = "get";
+		form.action="/cgi/cgi_handle_personal.py";
+		form.method = "POST";
+		form.target = "_blank";
+		form.enctype = "multipart/form-data";
 
 		//personal fieldset
 		var personalFieldset = document.createElement("fieldset");
@@ -82,7 +84,7 @@ var changeContent = {
 		country.required = "required";
 		country.pattern = "[A-Z]{3}";
 		country.placeholder = "VNM";
-		country.name = "country"
+		country.name = "country";
 
 		var gender = $("<form></form>").html("Gender: <input type='radio' name='gender' value='male' checked>" +
 			" Male <input type='radio' name='gender' value='female'> Female ");
@@ -112,9 +114,12 @@ var changeContent = {
 			"<option value='EEE'>EEE</option>" +
 			"<option value='SCE'>SCE</option>" +
 			"<option value='MASS'>MASS</option>" +
-			" </select> <br> <form oninput='outGPA.value=parseFloat(gpa.value)'>" +
+			" </select> <br>" +
+			"<form oninput='outGPA.value=parseFloat(gpa.value)'>" +
 			"CGPA: <input name='GPA' type='range' min='0' max='5' step='0.1' value='3.5' id='gpa'> = " +
-			"<output name='outGPA' for='gpa' ></output></form>");
+			"<output name='outGPA' for='gpa' ></output>" +
+			"</form>" +
+			"Upload your CV: <input type='file' name='filename'>");
 		
 		// submit button
 		var submit = document.createElement("input");
