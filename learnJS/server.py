@@ -15,12 +15,16 @@ import cgitb
 portHTTP = 5555
 addressHTTP = ("", portHTTP)
 
-port = 12345
+portMain = 12345
 ip = socket.gethostname()
 multiple_client = 5
 
+portChat = 5551
+addressChat = ("", portChat)
+
+
 # create socket and bind it to local machine put in listenMode
-def makeSocket():
+def makeSocket(port, ip):
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 	s.bind((ip, port))
@@ -66,6 +70,7 @@ def handleClient(client, addr, openServer):
 			print "Connection with ", addr, " stopped"
 			break
 
+
 # function to evaluate expression and return result to client, close/closeall
 # is to end the client or the server socket
 def handleMessAsync(msg, server, sock):
@@ -84,6 +89,7 @@ def handleMessAsync(msg, server, sock):
 		finally:
 			return str(result)
 
+
 # generate the HTTP server to access the html file
 def generateHTTPserver():
 	cgitb.enable()
@@ -94,21 +100,55 @@ def generateHTTPserver():
 	print "Start generate HTTP server"
 	httpd.serve_forever()
 
-# Chat application -----------------------
-# When the User get the chat app from http, the CGI will as the server to create a socket
-# correspond to the html client and return the IP address to the user at HTML
-# $$ another user open the html and make the CGI make a new socket and return the socket IP
-# then any of those connect to the IP addess, so that 2 html client communicate under the control of
-# 2 socket via the server
+
+# Chat application --------------DOCUMENTATION---------
+"""
+Chat class object:
+	when the main server receive coded message
+	"Chat//{'ip' = '127.0.0.1','port'=12345,'username'='xuanphi','mes'='hello world', 'target'='maivy'}"
+	code: mes = "" if it is just an update, response = "" if nothing it sent
+
+	main server will pass the socket to and message to the Chat object to handle it
+	@@ Chat object:
+	the chat app will response to the socket with the queue message to that socket, or response
+	response nothing, the received message will be put to the dict of queue mess as the target as key
+	dict = {
+		'xuanphi': ['maivy: hello world', 'maivy: chao phi']
+		'maivy': ['xuanphi: chao phi', 'xuanphi: chao vy']
+	}
+	socket = {
+		'xuanphi': socket1
+		'maivy': socket2
+	}
+	The message will wait for the request on update of the socket to execute
+"""
+
+
 # --------------------------------------
 
+
+# class Chat to handle chat, it will manipulate the transfer or infomation between sockets
+#
+class Chat(object):
+	def __init__(self):
+		self.server = makeSocket(portChat, "")
+		self.data = {}
+
+	def update(self, sock, mess):
+		pass
+
+	def extractMess(self, mess):
+		pass
+
+	def addSocket(self, sock, name):
+		pass
 
 
 if __name__ == '__main__':
 	# main program in try block to deal with keyboard interupt to close socket
 	# create the socket and bind and listen mode
-	serverSock = makeSocket()
-	print "Socket created: ", ip, " at port: ", port
+	serverSock = makeSocket(portMain, socket.gethostname())
+	print "Socket created: ", ip, " at port: ", portMain
 
 	try:
 		openWhole = [True]
@@ -143,7 +183,7 @@ if __name__ == '__main__':
 					data = sock.recv(1024)
 					if data:
 						# a readable data from the socket
-						print "Received: [ %s ] from %s" %(data, sock.getpeername())
+						print "Received: [ %s ] from %s" % (data, sock.getpeername())
 						messageQueue[sock].put(data)
 
 						# if socket not in outputs channel, add to it
@@ -188,7 +228,6 @@ if __name__ == '__main__':
 					outputs.remove(sock)
 				sock.close()
 				del messageQueue[sock]
-
 
 		# the loop has stopped
 		serverSock.close()
