@@ -11,6 +11,7 @@ import select
 import BaseHTTPServer
 import CGIHTTPServer
 import cgitb
+import chatApp
 
 portHTTP = 5555
 addressHTTP = ("", portHTTP)
@@ -19,7 +20,7 @@ portMain = 12345
 ip = socket.gethostname()
 multiple_client = 5
 
-portChat = 5551
+portChat = 5552
 addressChat = ("", portChat)
 
 
@@ -101,53 +102,13 @@ def generateHTTPserver():
 	httpd.serve_forever()
 
 
-# Chat application --------------DOCUMENTATION---------
-"""
-Chat class object:
-	when the main server receive coded message
-	"Chat//{'ip' = '127.0.0.1','port'=12345,'username'='xuanphi','mes'='hello world', 'target'='maivy'}"
-	code: mes = "" if it is just an update, response = "" if nothing it sent
-
-	main server will pass the socket to and message to the Chat object to handle it
-	@@ Chat object:
-	the chat app will response to the socket with the queue message to that socket, or response
-	response nothing, the received message will be put to the dict of queue mess as the target as key
-	dict = {
-		'xuanphi': ['maivy: hello world', 'maivy: chao phi']
-		'maivy': ['xuanphi: chao phi', 'xuanphi: chao vy']
-	}
-	socket = {
-		'xuanphi': socket1
-		'maivy': socket2
-	}
-	The message will wait for the request on update of the socket to execute
-"""
-
-
-# --------------------------------------
-
-
-# class Chat to handle chat, it will manipulate the transfer or infomation between sockets
-#
-class Chat(object):
-	def __init__(self):
-		self.server = makeSocket(portChat, "")
-		self.data = {}
-
-	def update(self, sock, mess):
-		pass
-
-	def extractMess(self, mess):
-		pass
-
-	def addSocket(self, sock, name):
-		pass
 
 
 if __name__ == '__main__':
 	# main program in try block to deal with keyboard interupt to close socket
 	# create the socket and bind and listen mode
 	serverSock = makeSocket(portMain, socket.gethostname())
+	serverChat = chatApp.Chat("", portChat)
 	print "Socket created: ", ip, " at port: ", portMain
 
 	try:
@@ -159,6 +120,7 @@ if __name__ == '__main__':
 
 		# start the http server in a new thread
 		thread.start_new_thread(generateHTTPserver, ())
+		thread.start_new_thread(serverChat.run, ())
 
 		# start the comm server for other python client program to work on
 		# using asynchronous polling with select, loop until no more serverCOM
