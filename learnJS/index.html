@@ -5,19 +5,21 @@
 	<link rel="stylesheet" href="styles.css">
 	<script src="jquery-3.0.0.min.js"></script>
 	<script src="snake.js"></script>
+	<script src="chat.js"></script>
 	<script src="main.js"></script>
 	<title>Phi's website</title>
 </head>
 <body background="background.jpg" style="background-attachment: fixed">
 
+<!--
 <header>Multiple application Web</header>
-
+-->
 <hr>
 <ul>
 	<li><a class="option" name="option" id="personal" onclick="changeContent.personalInit()">Personal information</a></li>
 	<li><a class="option" name="option" id="general">General Information</a></li>
 	<li><a class="option" name="option" id="snake" onclick="changeContent.snakeInit()">Game Snake</a></li>
-	<li><a class="option" name="option" id="chat">Chat App</a></li>
+	<li><a class="option" name="option" id="chat" onclick="changeContent.chatInit()">Chat App</a></li>
 	<li><a class="option" name="option" id="background" onclick="changeContent.backgroundInit()">Background Color</a></li>
 	<li style="float: right"><a class="about">About</a></li>
 </ul>

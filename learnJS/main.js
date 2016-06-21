@@ -205,6 +205,22 @@ var changeContent = {
 		// slidedown animation
 		$(division).slideDown(this.slideSpeed);
 	},
+	
+	chatInit: function () {
+		var division = document.getElementById("content");
+		this.activeOption("chat")
+		// slide up animation
+		if (this.animateSlideUp("chat")){
+			return;
+		}
+		$(division).html("");
+		
+		// creating content for chat ---------------------------
+		chat.initUI();
+		// Done creating content for chat-----------------------
+		
+		$(division).slideDown(this.slideSpeed);
+	},
 
 	statusInit: {},
 
