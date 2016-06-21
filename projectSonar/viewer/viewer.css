@@ -1,0 +1,55 @@
+body {
+	font-family: "DejaVu Sans", "arial", "sans-serif";
+	font-size: medium;
+	background-color: #e7e7e7;
+}
+
+.title {
+	font-family: "DejaVu Sans", "arial", "sans-serif";
+	font-size: large;
+	font-weight: bold;
+	background-color: #101080;
+	color: #ffffff;
+	padding: 5;
+	text-align: center;
+}
+
+.tx-title {
+	font-family: "DejaVu Sans", "arial", "sans-serif";
+	font-size: medium;
+	font-weight: bold;
+	background-color: #108010;
+	color: #ffff80;
+	padding: 5;
+	text-align: center;
+}
+
+.tx-info {
+	font-family: "DejaVu Sans", "arial", "sans-serif";
+	font-size: small;
+	background-color: #d0ffd0;
+}
+
+.tx-graph {
+	background-color: #d0ffd0;
+}
+
+.rx-title {
+	font-family: "DejaVu Sans", "arial", "sans-serif";
+	font-size: medium;
+	font-weight: bold;
+	background-color: #601060;
+	color: #ffff80;
+	padding: 5;
+	text-align: center;
+}
+
+.rx-info {
+	background-color: #e0d0ff;
+	font-family: "DejaVu Sans", "arial", "sans-serif";
+	font-size: small;
+}
+
+.rx-graph {
+	background-color: #e0d0ff;
+}

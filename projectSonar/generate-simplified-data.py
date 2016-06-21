@@ -16,16 +16,42 @@ def get_feature_vector(obj, features=FEATURES):
 			ret.append(0.0)
 	return ret
 
-def guess_label_from_filename(filename):
-	if 'wall' in filename:
-		return 'WALL'
-	if ('pole' in filename) or ('roll' in filename):
-		return 'POLE'	
-	if ('curb10' in filename) or ('curb7.5' in filename):
-		return 'C<15'
-	if ('curb20' in filename) or ('curb37.5' in filename) or ('curb58' in filename):
-		return 'C>15'
-	return ''
+# get the curb height from filename
+# Make sure the filename has 'curb' before using this function
+def get_curb_height(filename):
+	name_label = filename.split('-')
+	for x in name_label:
+		if 'curb' in x:
+			try:
+				return float(x[4:])
+			except ValueError, e:
+				print "Could not convert curb height to float from filename: ", filename
+	return -1.
+
+# Guess the label based on the filename of the raw json file
+def guess_label_from_filename(filename, CLASS="Normal"):
+	if CLASS == "Normal":
+		if 'wall' in filename:
+			return 'WALL'
+		if ('pole' in filename) or ('roll' in filename):
+			return 'POLE'
+		# other case which is curb
+		if 'curb' in filename:
+			_height = get_curb_height(filename)
+			if _height > 0.:
+				'''
+				if _height >= 15.:
+					return 'C>=15'
+				else:
+					return 'C<15'
+				'''
+				return 'C=' + str(get_curb_height(filename))
+		return ''
+	elif CLASS == "Surface":
+		if 'rough' in filename:
+			return 'ROUGH'
+		else:
+			return 'SMOOTH'
 	
 def get_sample_with_obj(inf, features, META=False):
 	ins = inf.readline()
