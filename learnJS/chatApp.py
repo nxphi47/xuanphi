@@ -38,7 +38,6 @@ Chat class object:
 	the class will run on another thread
 """
 
-
 # --------------------------------------
 
 class Chat(object):
@@ -55,7 +54,7 @@ class Chat(object):
 		if self.users.has_key(name):
 			self.users[name].append(mess)
 		else:
-			self.users[name] = mess
+			self.users[name] = [mess]
 
 	# get the message for sending
 	def getMessage(self, name):
@@ -65,9 +64,13 @@ class Chat(object):
 				return _mes
 			else:
 				while len(self.users[name]) > 0:
-					_mes += self.users[name].pop(0) + '\n'
+					_eleMes = self.users[name].pop(0)
+					if _eleMes != '':
+						_mes += _eleMes + "\n"
 		else:
-			print "GetMessage: %s , no record for him" %name
+			print "GetMessage: %s , no record for him" % name
+		if _mes == "":
+			_mes = "\n"
 		return _mes
 
 	# process the message
@@ -81,8 +84,12 @@ class Chat(object):
 		if not (_code.has_key('target') and _code.has_key('username') and _code.has_key('message')):
 			print "Code received not have valid attribute: ", _code
 			return
-		_input = [_code['username'] + ": " + _code['message']]
+		if _code['message'] != "":
+			_input = _code['username'] + ": " + _code['message']
+		else:
+			_input = ""
 		self.updateUsers(_code['target'], _input)
+		self.updateUsers(_code['username'], "")
 		self.updateSockets(sock, _code['username'])
 
 	# add the socket
@@ -95,7 +102,7 @@ class Chat(object):
 			"""
 			return
 		else:
-			self.sockets['name'] = sock
+			self.sockets[name] = sock
 
 	# process the output, with the socket
 	def processOutput(self, sock):
@@ -103,13 +110,15 @@ class Chat(object):
 			username = self.sockets.keys()[self.sockets.values().index(sock)]
 		except:
 			print "ProcessOuput: failed to get the username from self.sockets"
+			sock.send("Server failed to get this username when response")
+			sock.close()
 			return
 		# send the output back to socket
 		_mes = self.getMessage(username)
 		sock.send(_mes)
 
 		# clear everthing
-		sock.close()
+		self.sockOutput.remove(sock)
 		del self.sockets[username]
 		self.users[username] = []
 
@@ -120,19 +129,18 @@ class Chat(object):
 			openServer = [True]
 
 			while self.server in self.sockInput:
-				readable, writable, exceptional = select.select(self.sockInput,
-																self.sockOutput, self.sockInput)
+				readable, writable, exceptional = select.select(self.sockInput, self.sockOutput, self.sockInput)
 
 				# handle readable
 				for sock in readable:
 					# if the server get connection
 					if sock is self.server:
 						client, address = sock.accept()
-						print "Chat: new connection: ", address
+						# print "Chat: new connection: ", address
 						client.setblocking(0)
 						self.sockInput.append(client)
 
-						# may want to do somthing here on connection
+					# may want to do somthing here on connection
 					else:
 						# it may be the client sent data
 						data = sock.recv(4096)
@@ -140,7 +148,7 @@ class Chat(object):
 							# readable data from the socket
 							if "Chat//" in data:
 								# valid
-								self.processInput(data[7:], sock)
+								self.processInput(data[6:], sock)
 								if sock not in self.sockOutput:
 									self.sockOutput.append(sock)
 							else:
@@ -149,14 +157,17 @@ class Chat(object):
 								sock.close()
 						else:
 							# connection lost
-							print "Chat: client disconnected: ", sock
 							# stop listening
 							if sock in self.sockOutput:
 								self.sockOutput.remove(sock)
 							self.sockInput.remove(sock)
 							sock.close()
 
-							del self.sockets[self.sockets.values().index(sock)]
+							# del the information in socket and users
+							try:
+								del self.sockets[self.sockets.values().index(sock)]
+							except:
+								pass
 
 				for sock in writable:
 					self.processOutput(sock)

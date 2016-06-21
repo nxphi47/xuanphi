@@ -5,6 +5,7 @@ import os
 import socket
 import sys
 import select
+import time
 
 portHTTP = 5555
 addressHTTP = ("", portHTTP)
@@ -31,11 +32,13 @@ if __name__ == "__main__":
 	data = {'username': username, 'message': mes, 'target': target}
 """
 
+
 # this will create the message input to the socket
 def makeSocketMessage(username, mess, target):
 	_mes = "Chat//"
 	_dict = {'username': username, 'message': mess, 'target': target}
 	return _mes + str(_dict)
+
 
 def handleServerChat(address, port, cmd):
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -62,6 +65,7 @@ def handleServerChat(address, port, cmd):
 	# may need to handle the result
 	return result
 
+
 # main program
 form = cgi.FieldStorage()
 
@@ -71,9 +75,10 @@ message = form.getvalue('message')
 target = form.getvalue('target')
 
 command = makeSocketMessage(username, message, target)
-
 res = handleServerChat(addressChat, portChat, command)
+# res may be = "\n" do indicate nothing
 
 # send back to html
 print "Content-type:text/html\r\n\r\n"
+
 print res
