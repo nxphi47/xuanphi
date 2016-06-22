@@ -90,23 +90,61 @@ li a.about {
     position: relative;
 }
 
-#chatControlBox {
-    width: 100px;
-    margin-left: 5px;
-    padding-top: 0px;
-    height: 100%;
-    top: 0px;
-    float: left;
-}
-
-#chatContentBox {
-    height: 100%;
-    top: 0px;
-    float: left;
-    width: calc(100% - 106px);
+.rowLayout {
+    display: block;
+    overflow: auto;
 }
 
 .chatContent {
-    width: 100%;
+    font-size: 100%;
+    width: calc(100% - 95px);
+    display: inline-block;
+    padding: 10px 5px;
     padding-right: 0px;
+    box-sizing: border-box;
+    border: 3px solid green;
+    border-radius: 5px;
+    margin: 0px;
+    float: left;
+}
+
+.chatContent:focus {
+    border: 3px solid darkslategrey;
+}
+.chatContent[disabled] {
+    background-color: white;
+}
+
+.controlBoard, .controlButton {
+    /* whole width and margin total to be 100px to match the chatContent*/
+    width: 95px;
+    display: inline-block;
+    margin: 0px 0px 0px 0px;
+    float: right;
+}
+
+.controlButton {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    font-size: 100%;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    border: 3px solid rgba(0,0,0,0);
+    border-radius: 5px;
+    background-clip: padding-box;
+    padding: 10px 0px;
+}
+
+.controlButton:hover {
+    background-color: azure;
+    color: #000;
+}
+
+.controlButton:active {
+    background-color: lightpink;
+}
+
+#conversation {
+    resize: none;
 }

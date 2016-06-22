@@ -51,6 +51,8 @@ class Chat(object):
 
 	# Name of user and the queue of message
 	def updateUsers(self, name, mess):
+		if name == "":
+			return
 		if self.users.has_key(name):
 			self.users[name].append(mess)
 		else:
@@ -77,6 +79,7 @@ class Chat(object):
 	def processInput(self, codeMess, sock):
 		try:
 			_code = eval(codeMess)
+			print "ProcessInput: ", _code
 		except:
 			print "Code mess invalid: ", codeMess
 			return
@@ -95,6 +98,10 @@ class Chat(object):
 	# add the socket
 	def updateSockets(self, sock, name):
 		# if the socket with that name exist, there must be another client with the same name
+		if name == "":
+			# the JS have to prevent username = empty
+			print "updateSockets: name = empty"
+			exit(1)
 		if self.sockets.has_key(name):
 			print "Client already exist: ", name
 			"""
@@ -115,6 +122,8 @@ class Chat(object):
 			return
 		# send the output back to socket
 		_mes = self.getMessage(username)
+		# testing
+		print "ProcessOutput: ", _mes
 		sock.send(_mes)
 
 		# clear everthing
@@ -142,7 +151,7 @@ class Chat(object):
 
 					# may want to do somthing here on connection
 					else:
-						# it may be the client sent data
+						# it may be the client CGI send data
 						data = sock.recv(4096)
 						if data:
 							# readable data from the socket

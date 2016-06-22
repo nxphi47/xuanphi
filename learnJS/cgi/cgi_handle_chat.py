@@ -3,9 +3,12 @@
 import cgi, cgitb
 import os
 import socket
+import json
 import sys
 import select
 import time
+
+cgitb.enable()
 
 portHTTP = 5555
 addressHTTP = ("", portHTTP)
@@ -49,7 +52,7 @@ def handleServerChat(address, port, cmd):
 		s.connect((address, port))
 	except:
 		# failed to connect the server
-		print "Failed to connect to server chat: ", (address, port)
+		# print "Failed to connect to server chat: ", (address, port)
 		return "Chat//:NoConnectionError"
 
 	s.send(cmd)
@@ -57,7 +60,7 @@ def handleServerChat(address, port, cmd):
 	try:
 		result = s.recv(4096)
 	except:
-		print "Failed to get response from server chat, after sending"
+		# print "Failed to get response from server chat, after sending"
 		return "Chat//:NoResponseError"
 	finally:
 		s.close()
@@ -66,19 +69,20 @@ def handleServerChat(address, port, cmd):
 	return result
 
 
-# main program
 form = cgi.FieldStorage()
-
-# get data from fields
-username = form.getvalue('username')
-message = form.getvalue('message')
-target = form.getvalue('target')
+username = form.getvalue("username", "")
+target = form.getvalue("target", "")
+message = form.getvalue("message", "")
+# main program
 
 command = makeSocketMessage(username, message, target)
 res = handleServerChat(addressChat, portChat, command)
-# res may be = "\n" do indicate nothing
+
+if res == '\n':
+	res = ''
 
 # send back to html
-print "Content-type:text/html\r\n\r\n"
 
+print "Content-type:text/html"
+print
 print res

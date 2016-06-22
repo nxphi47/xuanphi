@@ -208,7 +208,7 @@ var changeContent = {
 	
 	chatInit: function () {
 		var division = document.getElementById("content");
-		this.activeOption("chat")
+		this.activeOption("chat");
 		// slide up animation
 		if (this.animateSlideUp("chat")){
 			return;
@@ -216,7 +216,7 @@ var changeContent = {
 		$(division).html("");
 		
 		// creating content for chat ---------------------------
-		chat.initUI();
+		chat.init();
 		// Done creating content for chat-----------------------
 		
 		$(division).slideDown(this.slideSpeed);

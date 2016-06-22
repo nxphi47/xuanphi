@@ -103,7 +103,6 @@ def generateHTTPserver():
 
 
 
-
 if __name__ == '__main__':
 	# main program in try block to deal with keyboard interupt to close socket
 	# create the socket and bind and listen mode

@@ -9,7 +9,7 @@ messages = [ '1+1',
              '2*2',
              '"helloooo"'
              ]
-
+"""
 if __name__ == '__main__':
 	# make socket and connect to local machine
 	socks = [
@@ -50,3 +50,8 @@ if __name__ == '__main__':
 		socks[0].close()
 		socks[1].close()
 	exit(0)
+"""
+
+test = [1,2,3,5,1,3,2,3,6,3]
+for i in set(test):
+	print i
