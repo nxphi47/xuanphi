@@ -115,10 +115,11 @@ var chat = {
 			case "dis":
 				this.connectiontState = "dis";
 				$(this.connectButton).html("Connect");
-				$(this.usernameTextField).attr({
-					enabled: ""
-				});
+				$(this.usernameTextField).prop('disabled', false);
 				// do CSS stuff here
+				$(this.connectButton).attr({
+					name: "connectButton",
+				});
 				break;
 			case "ing":
 				this.connectiontState = "ing";
@@ -131,10 +132,12 @@ var chat = {
 			case "ed":
 				this.connectiontState = "ed";
 				$(this.connectButton).html("Disconnect");
-				$(this.usernameTextField).attr({
-					disabled: ""
-				});
+				$(this.usernameTextField).prop('disabled', true);
 				// do CSS stuff here
+				$(this.connectButton).attr({
+					name: "disconnectButton",
+				});
+
 				break;
 			default:
 				console.log("Chat:UpdateConnectionState: failed to update %s\n", state);
@@ -168,7 +171,7 @@ var chat = {
 				else {
 					console.log("receive nothing");
 				}
-				if (this.connectiontState != "dis"){
+				if (chat.connectiontState != "dis"){
 					window.setTimeout(chat.updateCGI, 100);
 				}
 				return false;
