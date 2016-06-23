@@ -112,7 +112,7 @@ li a.about {
 	border: 3px solid darkslategrey;
 }
 
-#conversation[disabled]{
+#conversation[disabled] {
 	background-color: azure;
 }
 
@@ -145,6 +145,9 @@ li a.about {
 	background-color: red;
 }
 
+.controlButton[name=OKButton] {
+	background-color: darkorange;
+}
 .controlButton:hover {
 	background-color: azure;
 	color: #000;

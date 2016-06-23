@@ -10,9 +10,6 @@ var chat = {
 		for (var i = 0; i < 4; i++){
 			this.rowLayout.push($("<div class='rowLayout'></div>"))
 		}
-		this.contentBox = $("<div id='chatContentBox'></div>");
-		this.controlBox = $("<div id='chatControlBox'></div>");
-
 
 		// username text field and connection buttons
 		this.usernameTextField = $("<input id='username' name='client' class='chatContent' " +
@@ -60,6 +57,7 @@ var chat = {
 
 	init: function () {
 		this.initUI();
+		// handling event for connect field
 		$(this.connectButton).click(function () {
 			chat.handleConnect();
 			return false;
@@ -71,6 +69,7 @@ var chat = {
 			return false;
 		});
 
+		// handling event for send field
 		$(this.sendButton).click(function () {
 			chat.handleSend();
 			return false;
@@ -81,7 +80,21 @@ var chat = {
 			}
 			return false;
 		});
-		this.updateUIState("dis"); // changing from dis, ing, ed
+		
+		// handling event for OK field of target
+		$(this.OKButton).click(function () {
+			chat.handleOK();
+			return false;
+		});
+		$(this.targetTextField).keyup(function (event) {
+			if (event.keyCode == 13){
+				// when [enter] is pressed
+				$(chat.OKButton).click();
+			}
+		});
+		
+		this.updateUIConnectionState("dis"); // changing from dis, ing, ed
+		this.updateUITargetState("notOK");
 		this.username = "";
 		this.targetname = "";
 		this.message = ""; // to be keep updated on messtextfield or "" instead
@@ -97,91 +110,18 @@ var chat = {
 					alert("Please enter your username !");
 					return;
 				}
-				this.updateUIState('ing');
+				this.updateUIConnectionState('ing');
 				this.loopUpdate = window.setTimeout(chat.updateCGI, 100);
-				this.updateUIState('ed');
+				this.updateUIConnectionState('ed');
 				break;
 			case 'ed':
 				// start to disconnect
-				this.updateUIState('dis');
+				this.updateUIConnectionState('dis');
 				window.clearInterval(this.loopUpdate);
 				break;
 			default:
 				console.log("Failed to handleConnect")
 		}
-	},
-	updateUIState: function (state) {
-		switch (state){
-			case "dis":
-				this.connectiontState = "dis";
-				$(this.connectButton).html("Connect");
-				$(this.usernameTextField).prop('disabled', false);
-				// do CSS stuff here
-				$(this.connectButton).attr({
-					name: "connectButton",
-				});
-				break;
-			case "ing":
-				this.connectiontState = "ing";
-				$(this.connectButton).html("Connecting..");
-				$(this.usernameTextField).attr({
-					disabled: ""
-				});
-				// do CSS stuff here
-				break;
-			case "ed":
-				this.connectiontState = "ed";
-				$(this.connectButton).html("Disconnect");
-				$(this.usernameTextField).prop('disabled', true);
-				// do CSS stuff here
-				$(this.connectButton).attr({
-					name: "disconnectButton",
-				});
-
-				break;
-			default:
-				console.log("Chat:UpdateConnectionState: failed to update %s\n", state);
-				break;
-		}
-	},
-	updateCGI: function () {
-		if (!chat.updatePara()){
-			return;
-		}
-		var _data = {
-			username: chat.username,
-			target: chat.targetname,
-			message: chat.message
-		};
-		$.ajax({
-			type: "GET",
-			url: "/cgi/cgi_handle_chat.py",
-			data: _data,
-			dataType: "text",
-			success: function (response) {
-				// do somthing on the response
-				if (response != "" && response != "\n") {
-					if (response.indexOf("Chat//") < 0) {
-						chat.updateConversation(response);
-					}
-					else {
-						console.log("CGI error: " + response);
-					}
-				}
-				else {
-					console.log("receive nothing");
-				}
-				if (chat.connectiontState != "dis"){
-					window.setTimeout(chat.updateCGI, 100);
-				}
-				return false;
-			},
-			error: function (request, error) {
-				console.log("Ajax_error: " + error);
-				return false;
-			}
-			
-		})
 	},
 
 	handleSend: function () {
@@ -226,6 +166,128 @@ var chat = {
 		});
 		$(chat.messTextField).val("");
 	},
+
+	// handleOK specify the friend name
+	handleOK: function () {
+		if ($(chat.targetTextField).val() == ""){
+			alert("Please enter the friend name first!");
+			return;
+		}
+		chat.targetname = $(chat.targetTextField).val();
+		if (!chat.updatePara()){
+			return;
+		}
+		switch (chat.targetState){
+			case "notOK":
+				chat.updateUITargetState("OK");
+				break;
+			case "OK":
+				chat.updateUITargetState("notOK");
+				break;
+			default:
+				console.log("Failed to handle OK");
+		}
+	},
+	
+	updateUIConnectionState: function (state) {
+		switch (state){
+			case "dis":
+				this.connectiontState = "dis";
+				$(this.connectButton).html("Connect");
+				$(this.usernameTextField).prop('disabled', false);
+				// do CSS stuff here
+				$(this.connectButton).attr({
+					name: "connectButton",
+				});
+				break;
+			case "ing":
+				this.connectiontState = "ing";
+				$(this.connectButton).html("Connecting..");
+				$(this.usernameTextField).attr({
+					disabled: ""
+				});
+				// do CSS stuff here
+				break;
+			case "ed":
+				this.connectiontState = "ed";
+				$(this.connectButton).html("Disconnect");
+				$(this.usernameTextField).prop('disabled', true);
+				// do CSS stuff here
+				$(this.connectButton).attr({
+					name: "disconnectButton",
+				});
+
+				break;
+			default:
+				console.log("Chat:UpdateConnectionState: failed to update %s\n", state);
+				break;
+		}
+	},
+	
+	updateUITargetState: function (state) {
+		// there are OK and notOK state
+		switch (state){
+			case "OK":
+				this.targetState = "OK";
+				$(this.OKButton).html("Change");
+				$(this.targetTextField).prop('disabled', true);
+				$(this.OKButton).attr({
+					name: "OKButton",
+				});
+				break;
+			case "notOK":
+				this.targetState = "notOK";
+				$(this.OKButton).html("OK");
+				$(this.targetTextField).prop("disabled", false);
+				$(this.OKButton).attr({
+					name: "notOKbutton",
+				});
+				break;
+			default:
+				console.log("Chat:UpdateTargetState: failed to update %s\n", state);
+		}
+	},
+
+	updateCGI: function () {
+		if (!chat.updatePara()){
+			return;
+		}
+		var _data = {
+			username: chat.username,
+			target: chat.targetname,
+			message: chat.message
+		};
+		$.ajax({
+			type: "GET",
+			url: "/cgi/cgi_handle_chat.py",
+			data: _data,
+			dataType: "text",
+			success: function (response) {
+				// do somthing on the response
+				if (response != "" && response != "\n") {
+					if (response.indexOf("Chat//") < 0) {
+						chat.updateConversation(response);
+					}
+					else {
+						console.log("CGI error: " + response);
+					}
+				}
+				else {
+					console.log("receive nothing");
+				}
+				if (chat.connectiontState != "dis"){
+					window.setTimeout(chat.updateCGI, 100);
+				}
+				return false;
+			},
+			error: function (request, error) {
+				console.log("Ajax_error: " + error);
+				return false;
+			}
+
+		})
+	},
+
 	updatePara: function () {
 		chat.username = $(chat.usernameTextField).val();
 		chat.targetname = $(chat.targetTextField).val();
