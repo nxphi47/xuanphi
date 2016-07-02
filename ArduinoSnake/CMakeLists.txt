@@ -50,4 +50,4 @@ add_custom_target(
 # To enable code auto-completion, please specify path
 # to main source file (*.c, *.cpp) and uncomment line below
 #
-add_executable(ArduinoSnake src/main.cpp)
+add_executable(ArduinoSnake src/main.cpp src/DisplayMatrix.h)

@@ -3,13 +3,19 @@
 //
 
 #include "Arduino.h"
+#include "DisplayMatrix.h"
 
-void setup(){
-    Serial.begin(9600);
+Display matrix(ARRAY);
 
+void setup() {
+	//Serial.begin(9600);
 }
 
-void loop(){
-    Serial.println("Hello phi");
-    delay(500);
+
+void loop() {
+	//Serial.println("Begin loop\n");
+	int i;
+	for (i = 0; i < 26; ++i) {
+		matrix.showAlpha(1000, (char) (i + 65));
+	}
 }
