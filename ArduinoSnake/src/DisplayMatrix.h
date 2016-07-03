@@ -5,6 +5,7 @@
 #ifndef ARDUINOSNAKE_DISPLAYMATRIX_H
 #define ARDUINOSNAKE_DISPLAYMATRIX_H
 
+// muse be link with vector
 #include "Arduino.h"
 #include "stdio.h"
 #define MATRIXSIZE 8
@@ -28,7 +29,8 @@ const uint8_t col[8] = {
 
 unsigned long goal;
 
-//const int matrixSize = 8;
+// const int matrixSize = 8;
+// main array to be use
 uint8_t array[MATRIXSIZE][MATRIXSIZE] = {
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
@@ -40,10 +42,11 @@ uint8_t array[MATRIXSIZE][MATRIXSIZE] = {
 		{0, 0, 0, 0, 0, 0, 0, 0}
 };
 
-extern uint8_t numberSetMatrix[10][MATRIXSIZE][MATRIXSIZE];
+// SET OF PRE-DEFINED NUMBER AND CHARACTER, SEE AT THE END OF THE FILE
+extern uint8_t NUMBER_SET_MATRIX[10][MATRIXSIZE][MATRIXSIZE];
 
 // for alphabet use 'char' to transfer to number 0-25
-extern uint8_t alphabetSetMatrix[26][MATRIXSIZE][MATRIXSIZE];
+extern uint8_t ALPHABET_SET_MATRIX[26][MATRIXSIZE][MATRIXSIZE];
 
 // the class using a vector of struct Coor
 template<class T>
@@ -61,6 +64,7 @@ public:
 private:
 };
 
+// may use this one or use the other one in vector class
 struct Coor {
 	uint8_t X;
 	uint8_t Y;
@@ -70,9 +74,16 @@ enum DisplayMode {
 	ARRAY, VECTOR, DOT, POINTER
 };
 
-class Display {
+enum ShiftDirection {
+	UP, RIGHT, DOWN, LEFT
+};
+
+
+
+// Main class of matrix display
+class Matrix88Display {
 public:
-	Display(DisplayMode mode = ARRAY) {
+	Matrix88Display(DisplayMode mode = ARRAY) {
 		for (size_t i = 0; i < MATRIXSIZE; i++) {
 			pinMode(row[i], OUTPUT);
 			pinMode(col[i], OUTPUT);
@@ -83,7 +94,7 @@ public:
 		// serial
 	};
 
-	Display *clearDisplay() {
+	Matrix88Display *clearDisplay() {
 		for (size_t i = 0; i < MATRIXSIZE; i++) {
 			digitalWrite(row[i], LOW);
 			digitalWrite(col[i], HIGH);
@@ -91,7 +102,7 @@ public:
 		return this;
 	};
 
-	Display *setMode(DisplayMode mode) {
+	Matrix88Display *setMode(DisplayMode mode) {
 		this->mode = mode;
 		return this;
 	}
@@ -100,9 +111,8 @@ public:
 		return mode;
 	}
 
-
 	// array manipulation
-	Display *clearArray() {
+	Matrix88Display *clearArray() {
 		for (size_t i = 0; i < MATRIXSIZE; i++) {
 			for (size_t j = 0; j < MATRIXSIZE; j++) {
 				array[i][j] = 0;
@@ -111,17 +121,17 @@ public:
 		return this;
 	};
 
-	Display *setArrayDot(unsigned int x, unsigned int y) {
+	Matrix88Display *setArrayDot(unsigned int x, unsigned int y) {
 		array[x][y] = 1;
 		return this;
 	};
 
-	Display *clearArrayDot(unsigned int x, unsigned int y) {
+	Matrix88Display *clearArrayDot(unsigned int x, unsigned int y) {
 		array[x][y] = 0;
 		return this;
 	}
 
-	Display *setArrayAll(uint8_t arr[][MATRIXSIZE]) {
+	Matrix88Display *setArrayAll(uint8_t arr[][MATRIXSIZE]) {
 		for (uint8_t i = 0; i < MATRIXSIZE; ++i) {
 			for (uint8_t j = 0; j < MATRIXSIZE; ++j) {
 				array[i][j] = arr[i][j];
@@ -130,7 +140,7 @@ public:
 		return this;
 	}
 
-	Display *showArray(unsigned int interval) {
+	Matrix88Display *showArray(unsigned int interval) {
 		goal = millis() + (unsigned long) interval;
 		clearDisplay();
 		while (goal > millis()) {
@@ -152,12 +162,12 @@ public:
 	};
 
 	// vector manipulation
-	Display *addVector(Vector<Coor> vec) {
+	Matrix88Display *addVector(Vector<Coor> vec) {
 		vector = vec;
 		return this;
 	}
 
-	Display *showVector(unsigned int interval, Vector<Coor> &vec) {
+	Matrix88Display *showVector(unsigned int interval, Vector<Coor> &vec) {
 		// for the timming, need a wrap around feature
 		goal = millis() + (unsigned long) interval;
 		while (goal > millis()) {
@@ -174,7 +184,7 @@ public:
 
 	// main show function, decide whether array(to use the global array, need to change to local)
 	// or use local vector
-	Display *show(unsigned int interval) {
+	Matrix88Display *show(unsigned int interval) {
 		switch (getMode()) {
 			case ARRAY:
 				showArray(interval);
@@ -195,15 +205,15 @@ public:
 	}
 
 	// number and character manipulation
-	Display *showNumber(unsigned int interval, int num) {
+	Matrix88Display *showNumber(unsigned int interval, int num) {
 		clearArray();
-		setArrayAll(numberSetMatrix[num]);
+		setArrayAll(NUMBER_SET_MATRIX[num]);
 		showArray(interval);
 		clearArray();
 		return this;
 	}
 
-	Display *showAlpha(unsigned int  interval, char ch){
+	Matrix88Display *showAlpha(unsigned int  interval, char ch){
 		if (!isalnum(ch)){
 			// invalid character
 			Serial.println("Invalid input chat for show alpha");
@@ -218,9 +228,19 @@ public:
 		}
 		Serial.println(charNum);
 		clearArray();
-		setArrayAll(alphabetSetMatrix[charNum]);
+		setArrayAll(ALPHABET_SET_MATRIX[charNum]);
 		showArray(interval);
 		clearArray();
+		return this;
+	}
+
+	// ANIMATION, must input the pointer to the first set
+	Matrix88Display *showShift(unsigned int speed, unsigned int interval = 0, uint8_t *ptr, ShiftDirection direct, bool wrapAround){
+		// we change to showUpArray to be the first 8x8 matrix of the set and show, then update it
+		clearArray();
+		uint8_t showUpArray[8][8] = {{0}};
+		goal = millis() + (unsigned long) interval;
+		while (goal > interval);
 		return this;
 	}
 
@@ -232,7 +252,7 @@ private:
 };
 
 // number set
-uint8_t numberSetMatrix[10][MATRIXSIZE][MATRIXSIZE] = {
+uint8_t NUMBER_SET_MATRIX[10][MATRIXSIZE][MATRIXSIZE] = {
 		{// 0
 				{0, 0, 0, 1, 1, 0, 0, 0},
 				{0, 0, 1, 0, 0, 1, 0, 0},
@@ -335,7 +355,7 @@ uint8_t numberSetMatrix[10][MATRIXSIZE][MATRIXSIZE] = {
 		}
 };
 
-uint8_t alphabetSetMatrix[26][MATRIXSIZE][MATRIXSIZE] = {
+uint8_t ALPHABET_SET_MATRIX[26][MATRIXSIZE][MATRIXSIZE] = {
 		{// A
 				{0,0,0,1,1,0,0,0},
 				{0,0,1,0,0,1,0,0},
@@ -351,10 +371,10 @@ uint8_t alphabetSetMatrix[26][MATRIXSIZE][MATRIXSIZE] = {
 				{0,1,0,0,0,0,1,0},
 				{0,1,0,0,0,0,1,0},
 				{0,1,1,1,1,1,0,0},
-				{0,1,1,1,1,1,0,0},
 				{0,1,0,0,0,0,1,0},
 				{0,1,0,0,0,0,1,0},
-				{0,1,1,1,1,1,1,0}
+				{0,1,0,0,0,0,1,0},
+				{0,1,1,1,1,1,0,0}
 		},
 		{// C
 				{0,0,0,1,1,1,0,0},
@@ -381,7 +401,7 @@ uint8_t alphabetSetMatrix[26][MATRIXSIZE][MATRIXSIZE] = {
 				{0,1,0,0,0,0,0,0},
 				{0,1,0,0,0,0,0,0},
 				{0,1,1,1,1,1,0,0},
-				{0,1,1,1,1,1,0,0},
+				{0,1,0,0,0,0,0,0},
 				{0,1,0,0,0,0,0,0},
 				{0,1,0,0,0,0,0,0},
 				{0,1,1,1,1,1,1,0}
@@ -401,34 +421,34 @@ uint8_t alphabetSetMatrix[26][MATRIXSIZE][MATRIXSIZE] = {
 				{0,1,0,0,0,0,1,0},
 				{0,1,0,0,0,0,0,0},
 				{0,1,0,0,0,0,0,0},
-				{0,1,0,1,1,1,1,0},
+				{0,1,0,0,1,1,1,0},
 				{0,1,0,0,0,1,0,0},
-				{0,1,0,0,0,1,0,0},
-				{0,0,1,1,1,1,0,0}
+				{0,1,0,0,1,1,0,0},
+				{0,0,1,1,0,1,0,0}
 		},
 		{// H
 				{0,1,0,0,0,0,1,0},
 				{0,1,0,0,0,0,1,0},
 				{0,1,0,0,0,0,1,0},
 				{0,1,1,1,1,1,1,0},
-				{0,1,1,1,1,1,1,0},
+				{0,1,0,0,0,0,1,0},
 				{0,1,0,0,0,0,1,0},
 				{0,1,0,0,0,0,1,0},
 				{0,1,0,0,0,0,1,0}
 		},
 		{// I
 				{0,1,1,1,1,1,1,0},
-				{0,1,1,1,1,1,1,0},
 				{0,0,0,1,1,0,0,0},
 				{0,0,0,1,1,0,0,0},
 				{0,0,0,1,1,0,0,0},
 				{0,0,0,1,1,0,0,0},
-				{0,1,1,1,1,1,1,0},
+				{0,0,0,1,1,0,0,0},
+				{0,0,0,1,1,0,0,0},
 				{0,1,1,1,1,1,1,0}
 		},
 		{// J
 				{0,1,1,1,1,1,1,0},
-				{0,1,1,1,1,1,1,0},
+				{0,0,0,1,1,0,0,0},
 				{0,0,0,1,1,0,0,0},
 				{0,0,0,1,1,0,0,0},
 				{0,0,0,1,1,0,0,0},
@@ -447,13 +467,13 @@ uint8_t alphabetSetMatrix[26][MATRIXSIZE][MATRIXSIZE] = {
 				{0,1,0,0,0,0,1,0}
 		},
 		{// L
-				{0,1,1,0,0,0,0,0},
-				{0,1,1,0,0,0,0,0},
-				{0,1,1,0,0,0,0,0},
-				{0,1,1,0,0,0,0,0},
-				{0,1,1,0,0,0,0,0},
-				{0,1,1,0,0,0,0,0},
-				{0,1,1,1,1,1,1,0},
+				{0,1,0,0,0,0,0,0},
+				{0,1,0,0,0,0,0,0},
+				{0,1,0,0,0,0,0,0},
+				{0,1,0,0,0,0,0,0},
+				{0,1,0,0,0,0,0,0},
+				{0,1,0,0,0,0,0,0},
+				{0,1,0,0,0,0,0,0},
 				{0,1,1,1,1,1,1,0}
 		},
 		{// M
@@ -518,12 +538,12 @@ uint8_t alphabetSetMatrix[26][MATRIXSIZE][MATRIXSIZE] = {
 		},
 		{// S
 				{0, 0, 1, 1, 1, 1, 0, 0},
-				{0, 1, 1, 1, 1, 1, 1, 0},
-				{0, 1, 1, 0, 0, 0, 0, 0},
-				{0, 1, 1, 1, 1, 1, 1, 0},
-				{0, 1, 1, 1, 1, 1, 1, 0},
-				{0, 0, 0, 0, 0, 1, 1, 0},
-				{0, 1, 1, 1, 1, 1, 1, 0},
+				{0, 1, 0, 0, 0, 0, 1, 0},
+				{0, 1, 0, 0, 0, 0, 0, 0},
+				{0, 1, 0, 0, 0, 0, 0, 0},
+				{0, 1, 1, 1, 1, 1, 0, 0},
+				{0, 0, 0, 0, 0, 0, 1, 0},
+				{0, 1, 0, 0, 0, 0, 1, 0},
 				{0, 0, 1, 1, 1, 1, 0, 0}
 		},
 		{// T
