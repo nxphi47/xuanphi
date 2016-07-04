@@ -219,7 +219,7 @@ public:
 		return this;
 	}
 
-	// ANIMATION, must input the pointer to the first set
+	// ----------ANIMATION, must input the pointer to the first set --------------
 	Display8x8Matrix *showShift(unsigned int speed, unsigned int interval = 0, uint8_t *ptr, int size,
 							   Direction direct, bool wrapAround) {
 		// we change to showUpArray to be the first 8x8 matrix of the set and show, then update it
@@ -234,11 +234,13 @@ public:
 		return this;
 	}
 
+	// Copy the target array to the pointer of the source array, by the position of Hoz or Ver
 	void copyArrayPointerHorizontal(uint8_t arr[][MATRIXSIZE], uint8_t *ptr, int size, int posOfPtr) {
 		// size is the horizontal length of the pointer array
 		// the PTR must point to the first array element to be PRECISE
+		// 01234567,8 9 10 11 12 13 14 15
 		"Need to handlde wrap around";
-		if (size - posOfPtr < MATRIXSIZE) {
+		if (size - posOfPtr >= MATRIXSIZE) {
 			for (int i = 0; i < MATRIXSIZE; ++i) {
 				for (int j = 0; j < MATRIXSIZE; ++j) {
 					arr[i][j] = *(ptr + j + posOfPtr + size * i);
@@ -264,12 +266,89 @@ public:
 				arr[i][j] = *(ptr + j + size * (i + postOfPtr));
 			}
 		}
+		"Need to handle wrap around";
+		if (size - postOfPtr >= MATRIXSIZE){
+			for (int i = 0; i < MATRIXSIZE; ++i){
+				for (int j = 0; j < MATRIXSIZE; ++j) {
+					arr[i][j] = *(ptr + j + MATRIXSIZE * (i + postOfPtr));
+				}
+			}
+		}
+		else{
+			for (int i = 0; i < size - postOfPtr; ++i) {
+				for (int j = 0; j < MATRIXSIZE; ++j) {
+					arr[i][j] = *(ptr + j + MATRIXSIZE * (i + postOfPtr));
+				}
+			}
+			for (int k = size - postOfPtr; k < MATRIXSIZE; ++k) {
+				for (int i = 0; i < MATRIXSIZE; ++i) {
+					arr[k][i] = *(ptr + i + MATRIXSIZE * (k + postOfPtr - size));
+				}
+			}
+		}
 	}
 
-	// shift to return the new vertical or horizontal position of the target pointer
-	int shift(uint8_t arr[][MATRIXSIZE], uint8_t *ptr, int size, int currentPos) {
+	// shift to return the new vertical or horizontal position of the target pointer, copy to the array
+	int shift(uint8_t arr[][MATRIXSIZE], uint8_t *ptr, int size, int currentPos, Direction direct, bool horizon) {
 		"FIXME: ";
-		return 0;
+		switch (direct){
+			case UP:
+				currentPos--;
+				if (currentPos < 0){
+					if (horizon){
+						currentPos = MATRIXSIZE - 1;
+					}
+					else{
+						currentPos = size - 1;
+					}
+				}
+				copyArrayPointerVertical(arr, ptr, size, currentPos);
+				break;
+			case DOWN:
+				currentPos++;
+				if (horizon){
+					if (currentPos == MATRIXSIZE){
+						currentPos = 0;
+					}
+				}
+				else{
+					if (currentPos == size){
+						currentPos = 0;
+					}
+				}
+				copyArrayPointerVertical(arr, ptr, size, currentPos);
+				break;
+			case LEFT:
+				currentPos--;
+				if (currentPos < 0){
+					if (horizon){
+						currentPos = size - 1;
+					}
+					else{
+						currentPos = MATRIXSIZE - 1;
+					}
+				}
+				copyArrayPointerHorizontal(arr, ptr, size, currentPos);
+				break;
+			case RIGHT:
+				currentPos++;
+				if (horizon){
+					if (currentPos == size){
+						currentPos = 0;
+					}
+				}
+				else{
+					if (currentPos == MATRIXSIZE){
+						currentPos = 0;
+					}
+				}
+				copyArrayPointerHorizontal(arr, ptr, size, currentPos);
+				break;
+			default:
+				// fault found hear
+				break;
+		}
+		return currentPos;
 	}
 
 
