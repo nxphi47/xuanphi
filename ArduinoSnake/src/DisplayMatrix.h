@@ -8,6 +8,7 @@
 // muse be link with vector
 #include "Arduino.h"
 #include "stdio.h"
+#include "Vector.h"
 
 #define MATRIXSIZE 8
 
@@ -49,52 +50,32 @@ extern uint8_t NUMBER_SET_MATRIX[10][MATRIXSIZE][MATRIXSIZE];
 // for alphabet use 'char' to transfer to number 0-25
 extern uint8_t ALPHABET_SET_MATRIX[26][MATRIXSIZE][MATRIXSIZE];
 
-// the class using a vector of struct Coor
-template<class T>
-class Vector {
-public:
-	T &get(int index) {
-		T testVal;
-		return testVal;
-	}
-
-	int size() {
-		return 0;
-	}
-
-private:
-};
-
-// may use this one or use the other one in vector class
-struct Coor {
-	uint8_t X;
-	uint8_t Y;
-};
 
 enum DisplayMode {
 	ARRAY, VECTOR, DOT, POINTER
 };
 
-enum ShiftDirection {
-	UP, RIGHT, DOWN, LEFT
-};
+extern enum Direction;	// defined in Vector.h
+
 
 
 // Main class of matrix display
-class Matrix88Display {
+class Display8x8Matrix {
 public:
-	Matrix88Display(DisplayMode mode = ARRAY) {
+	Display8x8Matrix(DisplayMode mode = ARRAY) {
+		// serial
+		// use init to initialise, at void setup();
+	};
+	void init(DisplayMode mode = ARRAY){
 		for (size_t i = 0; i < MATRIXSIZE; i++) {
 			pinMode(row[i], OUTPUT);
 			pinMode(col[i], OUTPUT);
 		}
 		setMode(mode);
 		vector = Vector<Coor>();
+	}
 
-		// serial
-	};
-
-	Matrix88Display *clearDisplay() {
+	Display8x8Matrix *clearDisplay() {
 		for (size_t i = 0; i < MATRIXSIZE; i++) {
 			digitalWrite(row[i], LOW);
 			digitalWrite(col[i], HIGH);
@@ -102,7 +83,7 @@ public:
 		return this;
 	};
 
-	Matrix88Display *setMode(DisplayMode mode) {
+	Display8x8Matrix *setMode(DisplayMode mode) {
 		this->mode = mode;
 		return this;
 	}
@@ -112,7 +93,7 @@ public:
 	}
 
 	// array manipulation
-	Matrix88Display *clearArray() {
+	Display8x8Matrix *clearArray() {
 		for (size_t i = 0; i < MATRIXSIZE; i++) {
 			for (size_t j = 0; j < MATRIXSIZE; j++) {
 				array[i][j] = 0;
@@ -121,17 +102,17 @@ public:
 		return this;
 	};
 
-	Matrix88Display *setArrayDot(unsigned int x, unsigned int y) {
+	Display8x8Matrix *setArrayDot(unsigned int x, unsigned int y) {
 		array[x][y] = 1;
 		return this;
 	};
 
-	Matrix88Display *clearArrayDot(unsigned int x, unsigned int y) {
+	Display8x8Matrix *clearArrayDot(unsigned int x, unsigned int y) {
 		array[x][y] = 0;
 		return this;
 	}
 
-	Matrix88Display *setArrayAll(uint8_t arr[][MATRIXSIZE]) {
+	Display8x8Matrix *setArrayAll(uint8_t arr[][MATRIXSIZE]) {
 		for (uint8_t i = 0; i < MATRIXSIZE; ++i) {
 			for (uint8_t j = 0; j < MATRIXSIZE; ++j) {
 				array[i][j] = arr[i][j];
@@ -140,7 +121,7 @@ public:
 		return this;
 	}
 
-	Matrix88Display *showArray(unsigned int interval) {
+	Display8x8Matrix *showArray(unsigned int interval) {
 		goal = millis() + (unsigned long) interval;
 		clearDisplay();
 		while (goal > millis()) {
@@ -162,19 +143,23 @@ public:
 	};
 
 	// vector manipulation
-	Matrix88Display *addVector(Vector<Coor> vec) {
+	Display8x8Matrix *addVector(Vector<Coor> vec) {
 		vector = vec;
 		return this;
 	}
 
-	Matrix88Display *showVector(unsigned int interval, Vector<Coor> &vec) {
+	Display8x8Matrix *showVector(unsigned int interval, Vector<Coor> &vec) {
 		// for the timming, need a wrap around feature
 		goal = millis() + (unsigned long) interval;
+		clearDisplay();
 		while (goal > millis()) {
-			for (uint8_t i = 0; i < vec.size(); ++i) {
-				clearDisplay();
+			for (uint8_t i = 0; i < vec.size(); ++i) {\
+				// turn it on
 				digitalWrite(vec.get(i).X, HIGH);
 				digitalWrite(vec.get(i).Y, LOW);
+				// turn it off
+				digitalWrite(vec.get(i).X, LOW);
+				digitalWrite(vec.get(i).Y, HIGH);
 			}
 		}
 		clearDisplay();
@@ -184,7 +169,7 @@ public:
 
 	// main show function, decide whether array(to use the global array, need to change to local)
 	// or use local vector
-	Matrix88Display *show(unsigned int interval) {
+	Display8x8Matrix *show(unsigned int interval) {
 		switch (getMode()) {
 			case ARRAY:
 				showArray(interval);
@@ -205,7 +190,7 @@ public:
 	}
 
 	// number and character manipulation
-	Matrix88Display *showNumber(unsigned int interval, int num) {
+	Display8x8Matrix *showNumber(unsigned int interval, int num) {
 		clearArray();
 		setArrayAll(NUMBER_SET_MATRIX[num]);
 		showArray(interval);
@@ -213,7 +198,7 @@ public:
 		return this;
 	}
 
-	Matrix88Display *showAlpha(unsigned int interval, char ch) {
+	Display8x8Matrix *showAlpha(unsigned int interval, char ch) {
 		if (!isalnum(ch)) {
 			// invalid character
 			Serial.println("Invalid input chat for show alpha");
@@ -235,8 +220,8 @@ public:
 	}
 
 	// ANIMATION, must input the pointer to the first set
-	Matrix88Display *showShift(unsigned int speed, unsigned int interval = 0, uint8_t *ptr, int size,
-							   ShiftDirection direct, bool wrapAround) {
+	Display8x8Matrix *showShift(unsigned int speed, unsigned int interval = 0, uint8_t *ptr, int size,
+							   Direction direct, bool wrapAround) {
 		// we change to showUpArray to be the first 8x8 matrix of the set and show, then update it
 		// interval continuity only possible when wrapAround is TRUE
 		clearArray();

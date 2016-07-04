@@ -6,7 +6,7 @@
 #include "Arduino.h"
 #include "DisplayMatrix.h"
 
-Matrix88Display matrix(ARRAY);
+Display8x8Matrix matrix(ARRAY);
 
 void setup() {
 	//Serial.begin(9600);

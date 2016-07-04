@@ -86,7 +86,7 @@ public:
         cout << "\nfrom 2nd ";
         Node<T> * temp = head;
         while (temp != nullptr){
-            cout << " " << temp->val;
+            //cout << " " << temp->val;
             temp = temp->next;
         }
         tail = newNode;

@@ -4,7 +4,3 @@
 
 #include "Snake.h"
 
-Coor::Coor(int i, int i1) {
-
-}
-
