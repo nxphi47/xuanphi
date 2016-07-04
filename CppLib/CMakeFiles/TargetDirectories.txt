@@ -1,0 +1,3 @@
+/home/phi/Desktop/mygit/xuanphi/CppLib/CMakeFiles/edit_cache.dir
+/home/phi/Desktop/mygit/xuanphi/CppLib/CMakeFiles/rebuild_cache.dir
+/home/phi/Desktop/mygit/xuanphi/CppLib/CMakeFiles/CppLib.dir

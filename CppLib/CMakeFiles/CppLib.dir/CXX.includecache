@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/phi/Desktop/mygit/xuanphi/CppLib/Vector.h
+iostream
+-
+
+/home/phi/Desktop/mygit/xuanphi/CppLib/main.cpp
+iostream
+-
+Vector.h
+/home/phi/Desktop/mygit/xuanphi/CppLib/Vector.h
+
