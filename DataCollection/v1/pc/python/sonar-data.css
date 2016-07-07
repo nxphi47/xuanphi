@@ -1,0 +1,43 @@
+body {
+	font-family: "DejaVu Sans", "arial", "sans-serif";
+	font-size: medium;
+	background-color: #e7e7e7;
+}
+
+.title {
+	font-family: "DejaVu Sans", "arial", "sans-serif";
+	font-size: large;
+	font-weight: bold;
+	background-color: #101080;
+	color: #ffffff;
+	padding: 5;
+	text-align: center;
+}
+
+#button-div {
+	background-color: #f0f0f0;
+	vertical-align: top;
+	text-align: center;
+	width: 100px;
+	height: 500px;
+	float: left;
+}
+
+#display-div {
+	margin-left: 0px;
+	background-color: #e0e0e0;	
+	height: 500px;
+	text-align: center;
+	overflow: auto;
+}
+
+.label {
+	background-color: #108010;	
+	color: #ffff88;
+	font-family: "DejaVu Sans", "arial", "sans-serif";
+	font-size: large;
+	font-weight: bold;
+	text-align: center;
+}
+
+	
