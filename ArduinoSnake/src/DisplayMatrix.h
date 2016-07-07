@@ -7,7 +7,6 @@
 
 // muse be link with vector
 #include "Arduino.h"
-#include "stdio.h"
 #include "Vector.h"
 
 #define MATRIXSIZE 8
@@ -221,15 +220,34 @@ public:
 
 	// ----------ANIMATION, must input the pointer to the first set --------------
 	Display8x8Matrix *showShift(unsigned int speed, unsigned int interval = 0, uint8_t *ptr, int size,
-							   Direction direct, bool wrapAround) {
+							   Direction direct, bool wrapAround, bool horizon) {
 		// we change to showUpArray to be the first 8x8 matrix of the set and show, then update it
 		// interval continuity only possible when wrapAround is TRUE
 		clearArray();
 		uint8_t showUpArray[MATRIXSIZE][MATRIXSIZE] = {{0}};
 		goal = millis() + (unsigned long) interval;
+		int pos = 0;
 		while (goal > interval) {
 			// main operation, showing the the specify array at speed time and continue
 			// the transition to the next
+			if (horizon){
+				// can only be horizon transition
+				if (direct == UP || direct == DOWN){
+					Serial.println("Error: transit up down in horizon");
+					return this;
+				}
+				pos = shift(showUpArray, ptr, size, pos, direct, horizon);
+			}
+			else{
+				// can only be vertical
+				if (direct == LEFT || direct == RIGHT){
+					Serial.println("Error: transift left right in vertical");
+					return this;
+				}
+				pos = shift(showUpArray, ptr, size, pos, direct, horizon);
+			}
+			setArrayAll(showUpArray);
+			showArray(speed);
 		}
 		return this;
 	}

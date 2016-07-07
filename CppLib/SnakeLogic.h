@@ -6,7 +6,8 @@
 #define CPPLIB_SNAKELOGIC_H
 
 #include "Snake.h"
-/*
+
+/* ------- WORKFLOW -----
  * process of the snake logic in run loop, when time interval reach the speed, proceed the move
  * 1/ check incomming message, if yes, process the message and update para
  * 2/ if (time() - lastTime >= speed)
