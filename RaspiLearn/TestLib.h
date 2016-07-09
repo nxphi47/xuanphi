@@ -7,7 +7,6 @@
 
 #include <iostream>
 
-
 void printHello(){
 	std::cout << "hello world\n";
 }

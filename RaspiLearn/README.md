@@ -1,11 +1,8 @@
-this is README for wiringPi
-to build
-g++ -Wall main.cpp -o main -lwiringPi [or other]
-
-or add "-I/usr/local/include -L/usr/local/lib -lwiringPi"
+--------README for wiringPi-------
+g++ -Wall main.cpp -o main -lwiringPi
+"-I/usr/local/include -L/usr/local/lib -lwiringPi"
 
 or
-
 g++ -pthread main.cpp -o main -lwiringPi
 
 NOTE: To compile programs with wiringPi, you need to add:

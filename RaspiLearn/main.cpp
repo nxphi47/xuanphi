@@ -5,31 +5,32 @@
 using namespace std;
 
 const int ledPin = 1; // BCM 18, can use for pwm, onboard 12
-const int buttonPin = 0; // BCM 17, onboard 11, use pullUpDnControl
+const int recvPin = 0; // BCM 17, onboard 11, use pullUpDnControl
+const int lastPin = 29; //BCM 21, onboard 40
 
 int main() {
 	wiringPiSetup(); // using wiringPi numbering scheme
 	// setmode
 	pinMode(ledPin, OUTPUT);
-	pullUpDnControl(buttonPin, PUD_UP);
+	pinMode(recvPin, OUTPUT);
+	pinMode(lastPin,  OUTPUT);
+	//int ledState = 1;
+	digitalWrite(ledPin, 1);
+	digitalWrite(recvPin, 1);
+	digitalWrite(lastPin, 1);
 
-	int ledState = 1;
-	printHello();
-
-	while (true){
-		if (ledState == 1){
-			digitalWrite(ledPin, ledState);
-			cout << "Led: on, button: " << digitalRead(buttonPin) << endl;
-			ledState = 0;
-			delay(500);
+	unsigned long goal = 1000000000 + millis();
+	while (goal > millis()){
+		/*
+		for (int i = 0; i < 50; i++){
+			printHello();
+			digitalWrite(ledPin, i%2);
+			cout << "send " << i%2 << " recv: " << digitalRead(recvPin) << endl;
+			delay(300);
 		}
-		else{
-			// led off
-			digitalWrite(ledPin, ledState);
-			cout << "Led: off, button: " << digitalRead(buttonPin) << endl;
-			ledState = 1;
-			delay(500);
-		}
+		*/
+		printHello();
+		delay(1000);
 	}
 
 	return 0;

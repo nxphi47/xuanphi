@@ -1,11 +1,17 @@
 import time
 import RPi.GPIO as io
 
-ledPin = 18 # BCM pin, onboard 12
-buttonPin = 17 # BCM, onboard 11, use pullUp
+outpin = 18 # BCM pin, onboard 12
+inpin = 17 # BCM, onboard 11, use pullUp
 
 io.setmode(io.BCM)
-io.setup(ledPin, io.OUTPUT)
+io.setup(outpin, io.OUT)
+io.setup(inpin, io.IN)
 
 while True:
-	io.w
+	io.output(outpin, io.HIGH)
+	print "recv: ", io.input(inpin)
+	time.sleep(0.5)
+	io.output(outpin, io.LOW)
+	print "recv: ", io.input(inpin)
+	time.sleep(0.5)

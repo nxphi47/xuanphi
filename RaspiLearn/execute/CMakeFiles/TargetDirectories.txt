@@ -1,3 +1,0 @@
-/home/phi/Desktop/mygit/xuanphi/RaspiLearn/execute/CMakeFiles/edit_cache.dir
-/home/phi/Desktop/mygit/xuanphi/RaspiLearn/execute/CMakeFiles/rebuild_cache.dir
-/home/phi/Desktop/mygit/xuanphi/RaspiLearn/execute/CMakeFiles/RaspiLearn.dir
