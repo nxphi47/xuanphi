@@ -5,18 +5,21 @@
 //#include <sys/types.h>
 #include "Arduino.h"
 #include "DisplayMatrix.h"
+#include "SnakeLogic.h"
 
-Display8x8Matrix matrix(ARRAY);
+uint8_t rx = 0;// using serial
+uint8_t tx = 0;
+
+SnakeLogic game(0,0, SERIAL_COM);
 
 void setup() {
 	//Serial.begin(9600);
+	game.init();
 }
 
 
 void loop() {
 	//Serial.println("Begin loop\n");
-	int i;
-	for (i = 0; i < 26; ++i) {
-		matrix.showAlpha(1000, (char) (i + 65));
-	}
+	game.run();
+	delay(10000);
 }

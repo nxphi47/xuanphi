@@ -12,6 +12,7 @@
 
 extern enum Direction;	// defined in Vector.h
 extern struct Coor; 	// defined in Vector.h
+extern bool DEBUG;
 
 class Snake {
 public:
@@ -32,7 +33,7 @@ public:
 	}
 
 	// Operational function
-	Snake * Destroy(){
+	Snake * destroy(){
 		while (list.size() > 0){
 			list.pop();
 		}
@@ -89,12 +90,26 @@ public:
 		for (uint8_t i = 1; i < length - 1; ++i) {
 			if (x == list.get(i).X && y == list.get(i).Y) {
 				//printf("\ntouch snake at: %d %d, index %d\n", x, y, i);
+				Serial.println("Snake")
 				return false;
 			}
 		}
 
+		//check if it is wall to touch
 		if (wallOrNot) {
-			//check if it is wall to touch
+			// if
+			if (list.get(0).X == 0 && x == getLength() - 1){
+				return false;
+			}
+			if (list.get(0).X == getLength() - 1 && x == 0){
+				return false;
+			}
+			if (list.get(0).Y == 0 && y == getLength() - 1){
+				return false;
+			}
+			if (list.get(0).Y == getLength() - 1 && y == 0){
+				return false;
+			}
 		}
 		return true;
 	}

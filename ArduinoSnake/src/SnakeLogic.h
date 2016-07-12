@@ -12,8 +12,10 @@
 #include "CommsHub.h"
 
 bool DEBUG = true;
+#define I2C_ADDRESS 8 // I2C address
+#define BAUD_RATE 144000
 
-/* ---------- WORKFLOW------------
+/* ---------- WORKFLOW----README--------
  * process of the snake logic in run loop, when time interval reach the speed, proceed the move
  * 1/ check incomming message, if yes, process the message and update para
  * 2/ if (time() - lastTime >= speed)
@@ -22,32 +24,44 @@ bool DEBUG = true;
  * 4/ print
  * 5/ process outputUpdate and send back to controller
  *
- * ---------- COMMUNICATION protocal --------
- * wired: serial and software serial
- * 			see class commshub
- * wireless: wifi via ESP module
+ * ---------SETUP---------------
+ * commshub: may use Serial, software or I2C
+ * 		Serial: use normaal, rx=tx=0, or software on A0, A1
+ * 		I2C: must change pin in Display to use A4(SDA) A5(SDL)
+ * 		WIRELESS: to be develop via ESP module in commshub
  */
 
 
-extern void display(Snake theSnake);
-extern void processOutput(int status, int score);
 
 class SnakeLogic {
 public:
-	SnakeLogic(uint8_t rx = 0, uint8_t tx = 0){
+	SnakeLogic(uint8_t rx_sda = 0, uint8_t tx_sdl = 0, CommMode protocol){
 		speed = 100;
 		direct = RIGHT;
 		status = 0;
 		directQueue = Vector<Direction >();
 
-		pinTX = tx;
-		pinRX = rx;
-		if (pinRX == 0 || pinTX == 0) {
-			// Serial communication
-			commsHub = new CommsHub();
-		}
-		else {
-			commsHub = new CommsHub(pinRX, pinTX, SOFTWARE_SERIAL);
+		// for communication
+		mode = protocol;
+		pinTX_SDL = tx_sdl;
+		pinRX_SDA = rx_sda;
+		commsHub = new CommsHub();
+		// setmode
+		switch (mode){
+			case SERIAL_COM:
+			case SOFTWARESERIAL_COM:
+				commsHub->setMode(mode, pinRX_SDA, pinTX_SDL, BAUD_RATE);
+				break;
+			case I2C_COM:
+				commsHub->setMode(mode, pinRX_SDA, pinTX_SDL, I2C_ADDRESS);
+				break;
+			case WIRELESS_COM:
+			case SPI_COM:
+				"FIXME: ";
+				break;
+			default:
+				break;
+
 		}
 	}
 	void init(){
@@ -55,7 +69,7 @@ public:
 		snake = Snake(8, 2, false);
 		score = snake.getLength();
 		display.init(VECTOR);
-		commsHub->initialise(14400); // use the max
+		commsHub->initialise(); // use the max
 	}
 
 	// ------ OPERATION -------------------
@@ -129,15 +143,15 @@ public:
 		}
 
 		" at the end of this part, clear everything of the snake and all variable";
-
+		snake.destroy();
 	}
 	// main method to run
 	void run(){
 		standbyMode();
 		executeMode();
 		endMode();
+		commsHub->end();
 	}
-
 
 	// display the matrix of snake
 	void displaySnake2Matrix() {   // implement the display class with input is the snake
@@ -262,9 +276,11 @@ public:
 		}
 	}
 
-	int inputGetOption(); // endMode, 0 if nothing, 1 if restart, 2 if restart whole program(to be developt)
-	// set of function to use for sending
+	// endMode, 0 if nothing, 1 if restart, 2 if restart whole program(to be developt)
+	int inputGetOption();
 
+
+	// set of function to use for sending
 	// implement the commsHub to send to the controller
 	bool outputUpdate(){
 		// RESPONSE:SCORE:05
@@ -287,15 +303,17 @@ private:
 	int status; // 1 for running, 0 for stanby, 2, for failed
 	int score;
 	short speed;
-	uint8_t pinRX;
-	uint8_t pinTX;
 	Direction direct;
 	Vector<Direction > directQueue;
 	Snake snake;
-	Display8x8Matrix display;
+
+	// communication
 	CommsHub *commsHub;
-	// the communication hubs
+	CommMode mode;
+	uint8_t pinRX_SDA;
+	uint8_t pinTX_SDL;
 	// display module
+	Display8x8Matrix display;
 };
 
 #endif //ARDUINOSNAKE_SNAKELOGIC_H

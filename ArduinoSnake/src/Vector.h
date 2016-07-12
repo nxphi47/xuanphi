@@ -176,7 +176,7 @@ public:
 		}
 	}
 
-	// insert, accept negative index but not exceed the size
+	//insert, accept negative index but not exceed the size
 	Vector *insert(int index, T &newOne) {
 		if (index < (vectorSize + 1) * -1 || index > vectorSize) {
 			fprintf(stderr, "\nVector failed to insert, index out of bound");
@@ -199,6 +199,7 @@ public:
 			vectorSize++;
 			return this;
 		}
+
 
 		Node<T> *temp = head;
 		for (int i = 0; i < index; ++i) {
