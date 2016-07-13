@@ -1,8 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-x = [1,2,3,4,5,5,6,7]
-y = 0
-for i in xrange(10):
-	y += x[i]
+X = np.linspace(-np.pi, np.pi, 256, endpoint=True)
+C, S = np.cos(X), np.sin(X)
 
+plt.figure(figsize=(16,12), dpi=80)
+
+plt.subplot(2,1,1)
+plt.plot(X, C)
+plt.subplot(2,1,2)
+plt.plot(X, S)
+plt.show()

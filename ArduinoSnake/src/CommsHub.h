@@ -36,7 +36,7 @@ public:
 		// dothing
 	}
 
-	// need to set the mode for comms first, begining is Serial,
+	// need to set the commMode for comms first, begining is Serial,
 	// for I2C, third is address = 10 (default)
 	// for Serial, third is baud rate, 144000 (default)
 	CommsHub *setMode(CommMode protocol, uint8_t rx_sda, uint8_t tx_sdl, uint32_t thirdPara = 0){
@@ -131,7 +131,7 @@ public:
 		}
 	}
 
-	// requesting function -- byteSize, every byte delay 1ms
+	// requesting function -- byteSize, every byte delay 100 us
 	String request(uint16_t byteSize = 64){
 		String result = "";
 		unsigned long goal = millis() + byteSize + 5;
@@ -140,13 +140,13 @@ public:
 				case SERIAL_COM:
 					if (Serial.available()){
 						result += Serial.read();
-						delay(1);
+						delayMicroseconds(100);
 					}
 					break;
 				case SOFTWARESERIAL_COM:
 					if (portSoftwarePtr->available()){
 						result += portSoftwarePtr->read();
-						delay(1);
+						delayMicroseconds(100);
 					}
 					break;
 				case I2C_COM:
@@ -172,13 +172,14 @@ public:
 		Wire.requestFrom(i2cAddr, byteSize + 5);
 		while (Wire.available() > 0){
 			string += Wire.read();
-			delay(1);
+			delayMicroseconds(100);
 		}
 		if (DEBUG){
 			Serial.print("requestI2C_master: ");
 			Serial.println(string);
 		}
 	}
+	void requestI2C_slave(uint16_t byteSize = 64, String& string);
 
 	// Sending function set ----
 	// main send function

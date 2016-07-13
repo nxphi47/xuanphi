@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/SnakeLogic.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/DisplayMatrix.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Vector.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/SnakeController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Snake.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/CommsHub.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeListsPrivate.txt" isTestSource="false" />

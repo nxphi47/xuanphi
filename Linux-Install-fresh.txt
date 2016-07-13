@@ -1,10 +1,16 @@
 install java openjdk-8-jre
 install 3 IDE
 install ltp to power computer to limit overheating
-install python-matplotlib, python-numpy, python-scipy, python-libsvm
+install python-matplotlib, python-numpy, python-scipy, python-libsvm, paramiko, 
 install ibus-unikey
 install git-all
 install google chrome
 disable touchpad: syndaemon -i 1 -K -d
 http://www.linuxandubuntu.com/home/how-to-disable-touchpad-while-writing-article-or-documentation-in-ubuntulinux-mint-or-derivatives-linux
 
+for C:
+install wiringPi
+
+install intell, pycharm, clion
+
+install platformio for arduino

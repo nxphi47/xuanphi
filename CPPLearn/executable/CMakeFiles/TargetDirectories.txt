@@ -1,3 +1,0 @@
-/home/nxphi/Desktop/git/xuanphi/CPPLearn/executable/CMakeFiles/edit_cache.dir
-/home/nxphi/Desktop/git/xuanphi/CPPLearn/executable/CMakeFiles/rebuild_cache.dir
-/home/nxphi/Desktop/git/xuanphi/CPPLearn/executable/CMakeFiles/CPPLearn.dir

@@ -13,7 +13,7 @@
 
 bool DEBUG = true;
 #define I2C_ADDRESS 8 // I2C address
-#define BAUD_RATE 144000
+#define BAUD_RATE 9600
 
 /* ---------- WORKFLOW----README--------
  * process of the snake logic in run loop, when time interval reach the speed, proceed the move
@@ -96,10 +96,10 @@ public:
 		}
 		display.setMode(VECTOR);
 		status = 1;
-		// ending standby mode
+		// ending standby commMode
 	}
 
-	// execute mode, keep looping send and receive until failed or something happen
+	// execute commMode, keep looping send and receive until failed or something happen
 	void executeMode(){
 		status = 1;
 		unsigned long lastTime = millis();
@@ -132,6 +132,7 @@ public:
 	// endMode, just showing the result
 	void endMode(){
 		status = 2;
+		outputEnd();
 		while (true){
 			int end = inputGetOption();
 			if(end != 0){
@@ -284,7 +285,7 @@ public:
 	// implement the commsHub to send to the controller
 	bool outputUpdate(){
 		// RESPONSE:SCORE:05
-		String out = "RESPONSE:SCORE:" + String(score);
+		String out = "SCORE:" + String(score);
 		try {
 			commsHub->send(out);
 		}
@@ -298,11 +299,26 @@ public:
 
 		return true;
 	}
+	bool outputEnd(){
+		// END
+		String out = "END";
+		try {
+			commsHub->send(out);
+		}
+		catch (int e){
+			if (DEBUG){
+				Serial.println("Output end failed");
+			}
+			return false;
+		}
+		return true;
+
+	}
 
 private:
 	int status; // 1 for running, 0 for stanby, 2, for failed
-	int score;
-	short speed;
+	unsigned int score;
+	unsigned short speed;
 	Direction direct;
 	Vector<Direction > directQueue;
 	Snake snake;
