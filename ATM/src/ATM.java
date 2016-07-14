@@ -36,7 +36,6 @@ public class ATM extends JFrame {
         lockMode.setSuperMode(userMode);
         userMode.setSuperMode(lockMode);
         lockMode.execute();
-
     }
 
     public void execute(){

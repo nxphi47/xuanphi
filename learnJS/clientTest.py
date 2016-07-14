@@ -1,13 +1,12 @@
 import numpy as np
-import matplotlib.pyplot as plt
+from scipy import stats
+from scipy import misc
+from scipy import linalg
+from scipy import optimize
 
-X = np.linspace(-np.pi, np.pi, 256, endpoint=True)
-C, S = np.cos(X), np.sin(X)
+def func(x):
+	return 2*x*x + 5*x + 1
 
-plt.figure(figsize=(16,12), dpi=80)
+x = np.linspace(-10, 10, num=20)
+y = func(x) + np.random.randn(x.size)
 
-plt.subplot(2,1,1)
-plt.plot(X, C)
-plt.subplot(2,1,2)
-plt.plot(X, S)
-plt.show()
