@@ -9,13 +9,14 @@ using namespace std;
 
 
 int main() {
-	cout << "Hello, World!" << endl;
-	Vector<int> *ptr = new Vector<int>();
-	delete ptr;
-	int x = 2;
-	ptr = new Vector<int>(x);
-	cout << "hi: " << ptr->get(0);
-
+	Coor x = {0,3};
+	Coor y = {1,4};
+	Coor z = {4,5};
+	Vector<Coor> vector;
+	vector.append(x)->append(y);
+	cout << vector.get(0).X << " " << vector.get(0).Y << endl;
+	cout << vector.get(1).X << " " << vector.get(1).Y << endl;
+	cout << vector.get(2).X << " " << vector.get(2).Y << endl;
 
 	return 0;
 }

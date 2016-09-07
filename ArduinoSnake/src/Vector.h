@@ -38,7 +38,7 @@ public:
 		Vector();
 		head = new Node<T>();
 		head->val = start;
-		head->prev = nullptr;
+		head->prev = NULL;
 		head->next = tail;
 		tail = head;
 		//cout << "start = " << head->val << endl;
@@ -49,7 +49,7 @@ public:
 		Vector();
 		head = new Node<T>();
 		head->val = *arrayStart;
-		head->next = head->prev = nullptr;
+		head->next = head->prev = NULL;
 		Node<T> *temp = head;
 		if (size == 1) {
 			tail = head;
@@ -59,7 +59,7 @@ public:
 			Node<T> *newNode = new Node<T>();
 			newNode->val = *(arrayStart + i);
 			newNode->prev = temp;
-			newNode->next = nullptr;
+			newNode->next = NULL;
 			temp->next = newNode;
 
 			temp = newNode;
@@ -67,7 +67,7 @@ public:
 		}
 		tail = new Node<T>();
 		tail->val = *(arrayStart + size - 1);
-		tail->next = nullptr;
+		tail->next = NULL;
 		tail->prev = temp;
 
 		vectorSize = size;
@@ -78,7 +78,7 @@ public:
 		if (vectorSize == 0) {
 			head = new Node<T>();
 			head->val = newOne;
-			head->prev = nullptr;
+			head->prev = NULL;
 			head->next = tail;
 			tail = head;
 			//cout << "start = " << head->val << endl;
@@ -88,14 +88,14 @@ public:
 
 		Node<T> *newNode = new Node<T>();
 		newNode->val = newOne;
-		newNode->next = nullptr;
+		newNode->next = NULL;
 		newNode->prev = tail;
 		tail->next = newNode;
 		//cout << "tail = " << tail->val << " prev = " << tail->prev->val << endl;
 		//cout << "couse here = " << tail->prev->prev->next->val << endl;
 		//cout << "\nfrom 2nd ";
 		Node<T> *temp = head;
-		while (temp != nullptr) {
+		while (temp != NULL) {
 			//cout << " " << temp->val;
 			temp = temp->next;
 		}
@@ -112,7 +112,7 @@ public:
 		if (vectorSize == 1) {
 			T ref = tail->val;
 			delete head;
-			head = tail = nullptr;
+			head = tail = NULL;
 			vectorSize = 0;
 			return ref;
 		}
@@ -135,7 +135,7 @@ public:
 		if (vectorSize == 1) {
 			T ref = head->val;
 			delete head;
-			head = tail = nullptr;
+			head = tail = NULL;
 			vectorSize = 0;
 			return ref;
 		}
@@ -157,7 +157,7 @@ public:
 	T &get(int index) {
 		Node<T> *tempHead = head;
 		if (index < (vectorSize + 1) * -1 || index > vectorSize) {
-			fprintf(stderr, "\nVector failed to insert, index out of bound");
+			//fprintf(stderr, "\nVector failed to insert, index out of bound");
 			exit(1);
 		}
 		if (index < 0) { index += vectorSize; }
@@ -192,7 +192,7 @@ public:
 		if (index == 0) {
 			Node<T> *newNode = new Node<T>();
 			newNode->val = newOne;
-			newNode->prev = nullptr;
+			newNode->prev = NULL;
 			newNode->next = head;
 			head->prev = newNode;
 			head = newNode;

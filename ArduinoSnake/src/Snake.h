@@ -10,8 +10,8 @@
 #include "Vector.h"
 #include "DisplayMatrix.h"
 
-extern enum Direction;	// defined in Vector.h
-extern struct Coor; 	// defined in Vector.h
+//extern enum Direction;	// defined in Vector.h
+//extern struct Coor; 	// defined in Vector.h
 extern bool DEBUG;
 
 class Snake {
@@ -90,7 +90,7 @@ public:
 		for (uint8_t i = 1; i < length - 1; ++i) {
 			if (x == list.get(i).X && y == list.get(i).Y) {
 				//printf("\ntouch snake at: %d %d, index %d\n", x, y, i);
-				Serial.println("Snake")
+				Serial.println("Snake");
 				return false;
 			}
 		}

@@ -35,7 +35,7 @@ bool DEBUG = true;
 
 class SnakeLogic {
 public:
-	SnakeLogic(uint8_t rx_sda = 0, uint8_t tx_sdl = 0, CommMode protocol){
+	SnakeLogic(CommMode protocol, uint8_t tx_sdl, uint8_t rx_sda) {
 		speed = 100;
 		direct = RIGHT;
 		status = 0;
@@ -165,8 +165,8 @@ public:
 		display.showVector(interval, snakeAndFood);
 
 		// cleaning
-		delete snakeAndFood;
-		delete food;
+		//delete snakeAndFood;
+		//delete food;
 	}
 
 	// ---- Communication set of functions
@@ -248,6 +248,8 @@ public:
 					Serial.print("getSpeed: ");
 					Serial.println(speedStr);
 				}
+				speedVal = (short) speedStr.toInt();
+				/* ---??? exception handling is disabled??
 				try {
 					speedVal = (short) speedStr.toInt();
 				} catch (int e){
@@ -257,6 +259,7 @@ public:
 						return -1;
 					}
 				}
+				*/
 				return speedVal; // return the speedVal
 			}
 			else{
@@ -278,7 +281,10 @@ public:
 	}
 
 	// endMode, 0 if nothing, 1 if restart, 2 if restart whole program(to be developt)
-	int inputGetOption();
+	int inputGetOption(){
+		"FIX MEEEEEEEEEEEEEE";
+		return 1;
+	};
 
 
 	// set of function to use for sending
@@ -286,6 +292,8 @@ public:
 	bool outputUpdate(){
 		// RESPONSE:SCORE:05
 		String out = "SCORE:" + String(score);
+		commsHub->send(out);
+		/* ----- exception handling disabled?????
 		try {
 			commsHub->send(out);
 		}
@@ -296,12 +304,14 @@ public:
 			}
 			return false;
 		}
-
+		*/
 		return true;
 	}
 	bool outputEnd(){
 		// END
 		String out = "END";
+		commsHub->send(out);
+		/*
 		try {
 			commsHub->send(out);
 		}
@@ -311,6 +321,7 @@ public:
 			}
 			return false;
 		}
+		*/
 		return true;
 
 	}

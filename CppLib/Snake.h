@@ -7,15 +7,6 @@
 
 #include "Vector.h"
 
-struct Coor {
-    uint8_t X;
-    uint8_t Y;
-};
-
-enum Direction {
-    UP, RIGHT, DOWN, LEFT
-};
-
 class Snake {
 public:
 

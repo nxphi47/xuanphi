@@ -39,7 +39,7 @@ public:
 	// need to set the commMode for comms first, begining is Serial,
 	// for I2C, third is address = 10 (default)
 	// for Serial, third is baud rate, 144000 (default)
-	CommsHub *setMode(CommMode protocol, uint8_t rx_sda, uint8_t tx_sdl, uint32_t thirdPara = 0){
+	CommsHub *setMode(CommMode protocol, uint8_t rx_sda, uint8_t tx_sdl, uint8_t thirdPara = 0){
 		mode = protocol;
 		if (mode == SERIAL_COM){
 			// do nothing
@@ -150,7 +150,7 @@ public:
 					}
 					break;
 				case I2C_COM:
-					requestI2C_master(byteSize, result);
+					requestI2C_master(result, byteSize);
 					break;
 				case WIRELESS_COM:
 				case SPI_COM:
@@ -168,7 +168,7 @@ public:
 		return result;
 	}
 	// request when i2c master
-	void requestI2C_master(uint16_t byteSize = 64, String& string){
+	void requestI2C_master(String &string, uint16_t byteSize) {
 		Wire.requestFrom(i2cAddr, byteSize + 5);
 		while (Wire.available() > 0){
 			string += Wire.read();
@@ -179,7 +179,7 @@ public:
 			Serial.println(string);
 		}
 	}
-	void requestI2C_slave(uint16_t byteSize = 64, String& string);
+	void requestI2C_slave(String &string, uint16_t byteSize);
 
 	// Sending function set ----
 	// main send function
@@ -224,7 +224,7 @@ private:
 	CommMode mode;
 
 	// I2C
-	uint32_t i2cAddr;
+	uint8_t i2cAddr;
 	uint8_t pinSDA;
 	uint8_t pinSDL;
 

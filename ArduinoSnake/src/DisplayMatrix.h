@@ -54,9 +54,7 @@ enum DisplayMode {
 	ARRAY, VECTOR, DOT, POINTER
 };
 
-extern enum Direction;	// defined in Vector.h
-
-
+//extern enum Direction;	// defined in Vector.h
 
 // Main class of matrix display
 class Display8x8Matrix {
@@ -151,11 +149,13 @@ public:
 		// for the timming, need a wrap around feature
 		goal = millis() + (unsigned long) interval;
 		clearDisplay();
+		int i;
 		while (goal > millis()) {
-			for (uint8_t i = 0; i < vec.size(); ++i) {\
+			for (i = 0; i < vec.size(); i++) {
 				// turn it on
 				digitalWrite(vec.get(i).X, HIGH);
 				digitalWrite(vec.get(i).Y, LOW);
+				delay(100);
 				// turn it off
 				digitalWrite(vec.get(i).X, LOW);
 				digitalWrite(vec.get(i).Y, HIGH);
@@ -219,7 +219,7 @@ public:
 	}
 
 	// ----------ANIMATION, must input the pointer to the first set --------------
-	Display8x8Matrix *showShift(unsigned int speed, unsigned int interval = 0, uint8_t *ptr, int size,
+	Display8x8Matrix *showShift(unsigned int speed, unsigned int interval, uint8_t *ptr, int size,
 							   Direction direct, bool wrapAround, bool horizon) {
 		// we change to showUpArray to be the first 8x8 matrix of the set and show, then update it
 		// interval continuity only possible when wrapAround is TRUE
