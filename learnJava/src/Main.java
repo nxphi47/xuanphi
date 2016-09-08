@@ -12,34 +12,21 @@ class Main {
 	public static void main(String[] args) throws ScriptException {
 		//PaintAppForm appForm = new PaintAppForm();
 
+
 		GUIBouncing app = new GUIBouncing();
 
 
 		BouncingThreading thread = new BouncingThreading(app.getBallList(), app.getPanel());
 
+		startThreadBouncing(thread);
+
+	}
+
+	public static void startThreadBouncing(BouncingThreading th){
+
 		ExecutorService service = Executors.newCachedThreadPool();
-		service.execute(thread);
+		service.execute(th);
 		service.shutdown();
-
-
-        /*
-        BouncingSwingWorker worker = new BouncingSwingWorker(app.getBallList(), app.getPanel());
-        worker.execute();
-        */
-		/*
-		Properties props = new Properties();
-
-		props.setProperty("color", "blue");
-		props.setProperty("width", "100%");
-		props.setProperty("height", "200%");
-
-		printProperties(props);
-		saveProperties(props);
-
-		Properties newProps = new Properties();
-		loadProperties(newProps);
-		printProperties(newProps);
-		*/
 
 	}
 

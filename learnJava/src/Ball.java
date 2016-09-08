@@ -5,99 +5,73 @@ g = -9.81 m/s2 = -9.81x10^-6 m/milisec^2
 
 */
 
+import java.awt.*;
+
 public class Ball {
 	private int x; //px
 	private int y0;
 	private int y;
 	private int r;
-	private double realX; // meters
-	private double realY;
-	private double realYo;
-	private double realR;
-	private double velocity; // means the velocity at bouncing
-	private boolean down;
-	private double time; // milisec
-	private double period;
 	private long periodLong;
 	private long timeLong;
+	private boolean active;
+	private Color color;
 
-	private final double pxToM = 1;
+	//private final double pxToM = 1;
 	private final double gravity = 9.81e-4; // cm/milisec^2
-	private final double maxHeight = 250; // centimeters
+	private static final double maxHeight = 650; // centimeters
 
-	public Ball(int x, int y, int r) {
+	public Ball(int x, int y, Color color, int r) {
 		this.x = x;
-		this.y0 = y;
+		this.y0 = y + r;
 		this.y = y;
 		this.r = r;
-		realR = r * pxToM;
-		realX = x * pxToM;
-
-		realY = y * pxToM + realR; // is actually the bottom point
-		realYo = realY;
-		this.time = 0;
+		this.color = color;
+		//this.time = 0;
 		timeLong = 0;
 		periodLong = (int) (2 * Math.round(Math.sqrt(2 * (maxHeight - y0) / gravity)));
-		period = 2 * Math.sqrt(2 * (maxHeight - realY) / gravity);
-		down = true;
-		int endPoint = y + r;
-		//velocity = Math.sqrt(2*9.81*(1000-endPoint)*0.01);
-		velocity = 0;
+		//period = 2 * Math.sqrt(2 * (maxHeight - realY) / gravity);
+
 	}
 
 	public Ball(int x, int y) {
-		this(x, y, 10); // default radius is 10
+		this(x, y, Color.BLACK, 10); // default radius is 10
 	}
 
 	public long move(long t) { // milisection
+		if (!active){
+			return y;
+		}
 
-		/*
-		time += (double) t / 1000;
-		while (time > period){
-			time -= period;
-		}
-		if (time < period / 2){
-			realY = realYo + 0.5 * gravity * time * time;
-		}
-		else {
-			// moving up
-			double upTime = period - time;
-			realY = realYo + 0.5 * gravity * upTime * upTime;
-		}
-		y = (int) ((realY - realR) / pxToM);
-		*/
-		// change to int version
 		timeLong += t;
 		while (timeLong > periodLong){
-			timeLong -= period;
+			timeLong -= periodLong;
 		}
 		if (timeLong < periodLong / 2){
-			y = (int) (y0 + gravity * timeLong * timeLong / 2);
+			y = (int) (y0 + gravity * timeLong * timeLong / 2 - r);
 		}
 		else {
 			// moving up
 			long upTime = periodLong - timeLong;
-			y = (int) (y0 + gravity * upTime * upTime / 2);
+			y = (int) (y0 + gravity * upTime * upTime / 2 - r);
 		}
 
 
 		return y;
 	}
 
-	public synchronized void setVelo(double velo) {
-		velocity = velo;
+	public static double getMaxHeight(){
+		return maxHeight;
 	}
 
-	public synchronized double getVelo() {
-		return velocity;
+	public synchronized void activate(){
+		active = true;
 	}
-
-	public synchronized void setDown(boolean down) {
-		this.down = down;
+	public synchronized void deactivate(){
+		active = false;
 	}
-
-	public synchronized boolean getDown() {
-		return down;
+	public synchronized boolean getActive(){
+		return active;
 	}
 
 	public synchronized void setX(int x) {
@@ -115,17 +89,24 @@ public class Ball {
 	}
 
 	public synchronized int getY() {
-
-		//y = Math.round((realY - realR) / pxToM);
-		//y = Integer.parseInt((realY - realR) / pxToM);
 		return y;
 	}
 
 	public synchronized void setR(int r) {
+		y0 = y0 - this.r + r;
+		periodLong = (int) (2 * Math.round(Math.sqrt(2 * (maxHeight - y0) / gravity)));
 		this.r = r;
 	}
 
 	public synchronized int getR() {
 		return r;
+	}
+
+	public synchronized Color getColor() {
+		return color;
+	}
+
+	public synchronized void setColor(Color color) {
+		this.color = color;
 	}
 }

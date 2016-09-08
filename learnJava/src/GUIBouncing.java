@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.concurrent.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -10,6 +9,17 @@ public class GUIBouncing extends JFrame {
 
 	private class BallPanel extends JPanel {
 		private ArrayList<Ball> ballList;
+		private Color[] ballColorList = new Color[]{
+				Color.RED,
+				Color.ORANGE,
+				Color.YELLOW,
+				Color.GREEN,
+				Color.CYAN,
+				Color.BLUE,
+				new Color( 128, 0, 128 )
+		};
+		private Random randGenerator = new Random();
+
 
 		public BallPanel(ArrayList<Ball> list) {
 			ballList = list;
@@ -17,39 +27,43 @@ public class GUIBouncing extends JFrame {
 			// mouse listener
 			addMouseListener(
 					new MouseAdapter() {
+						//private boolean released = false;
+						private Ball newBall;
+						private Thread increaseRThread;
+
 						@Override
-						public void mouseClicked(MouseEvent e) {
-							BallPanel.this.addBall(new Ball(e.getX(), e.getY(), 10)); // radius r
-							System.out.printf("add new ball\n");
-							repaint();
+						public void mousePressed(MouseEvent e) {
+							newBall =new Ball(e.getX(), e.getY(), ballColorList[randGenerator.nextInt(ballColorList.length)], 2);
+							ballList.add(newBall);
+							increaseRThread = new Thread(new Runnable() {
+								private final int delay = 10;
+								@Override
+								public void run() {
+									while (!newBall.getActive()){
+										try{
+											Thread.sleep(delay);
+										}
+										catch (InterruptedException except){
+											System.err.println("Increase radius thread interrupted\n");
+											return;
+										}
+										newBall.setR(newBall.getR() + delay / 10);
+									}
+								}
+							});
+							increaseRThread.start();
 						}
+
+						@Override
+						public void mouseReleased(MouseEvent e) {
+							//released = true;
+							newBall.activate();
+						}
+
 					}
 			);
 
-			// bouncing right here
-			/*
-            Thread game = new Thread(){
-                @Override
-                public void run(){
-                    // update all the ballList
-                    while(true){
-                        try{
-                            Thread.sleep(interval);
-                        }
-                        catch (InterruptedException e){
-                            e.printStackTrace();
-                        }
-                        for (int i = 0; i < ballList.size(); i++) {
-                            ballList.get(i).move(interval);
-                        }
-                        repaint();
-                    }
-                }
-            };
-            game.start();
-            */
 		}
-
 
 		public void addBall(Ball newBall) {
 			ballList.add(newBall);
@@ -61,12 +75,18 @@ public class GUIBouncing extends JFrame {
 
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2d.setColor(Color.BLUE);
+
+			g2d.setColor(Color.BLACK);
+			g2d.drawLine(0, (int) Ball.getMaxHeight(), GUIBouncing.this.getWidth(), (int) Ball.getMaxHeight());
+
+			//g2d.setColor(Color.BLUE);
 
 			for (Ball aBallList : ballList) {
 				int x = aBallList.getX();
 				int y = aBallList.getY();
 				int r = aBallList.getR();
+				Color color = aBallList.getColor();
+				g2d.setColor(color);
 				g2d.fillOval(x - r, y - r, r * 2, r * 2);
 			}
 		}
@@ -77,6 +97,10 @@ public class GUIBouncing extends JFrame {
 
 	public GUIBouncing() {
 		super("Bouncing game");
+
+		// to setup the accelerated openGL.
+		System.setProperty("sun.java2d.opengl", "true");
+
 		// declare component
 		ballList = new ArrayList<Ball>(10);
 		//ballList.add(new Ball(100,400));
@@ -93,7 +117,8 @@ public class GUIBouncing extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
-		setSize(500, 250);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize((int) screenSize.getWidth(), (int) Ball.getMaxHeight() + 50);
 		setVisible(true);
 	}
 

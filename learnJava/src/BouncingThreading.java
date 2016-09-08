@@ -14,7 +14,7 @@ public class BouncingThreading implements Runnable {
 	private ArrayList<Ball> ballList;
 	private JPanel panel;
 	private long time;
-	private final long interval = 50;
+	private final long interval = 1;
 
 	public BouncingThreading(ArrayList<Ball> list, JPanel panel) {
 		ballList = list;
