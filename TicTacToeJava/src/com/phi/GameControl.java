@@ -5,7 +5,7 @@ package com.phi;
  */
 
 public class GameControl {
-	public enum GameStatus {OWIN, DRAW, XWIN};
+	public static enum GameStatus {OWIN, DRAW, XWIN};
 	private int[][] matrix;
 	private GameStatus status;
 

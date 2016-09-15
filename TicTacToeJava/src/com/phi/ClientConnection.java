@@ -30,6 +30,7 @@ public class ClientConnection implements Runnable {
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
 	private LinkedBlockingQueue<String> queueMessage;
+	public static final String nothing = "nothing";
 
 	// interface to the GUI
 	private ClientTTT gui;
@@ -80,7 +81,7 @@ public class ClientConnection implements Runnable {
 			try {
 				String message = (String) input.readObject();
 				String[] parts = message.split(",");
-				if (Main.DEBUG){
+				if (Main.DEBUG && !message.contains(nothing)){
 					System.out.printf("\nClient receive: " + message);
 					System.out.printf("\nArray: " + Arrays.toString(parts));
 
@@ -145,7 +146,7 @@ public class ClientConnection implements Runnable {
 		if (queueMessage.size() > 0){
 			mess = queueMessage.take();
 		}
-		if (Main.DEBUG){
+		if (Main.DEBUG && !mess.contains(nothing)){
 			System.out.printf("\nClient: request " + mess);
 		}
 		output.writeObject(mess);
@@ -154,7 +155,7 @@ public class ClientConnection implements Runnable {
 
 	public void addMessage(String mess) throws IOException, InterruptedException {
 		queueMessage.put(mess);
-		if (Main.DEBUG){
+		if (Main.DEBUG && !mess.contains(nothing)){
 			System.out.printf("\nSuccessfully add " + mess + " to  queue");
 		}
 	}
@@ -169,11 +170,11 @@ public class ClientConnection implements Runnable {
 	}
 
 	// setter and getter --------------------------------------
-	public synchronized LinkedBlockingQueue<String> getQueueMessage() {
+	public LinkedBlockingQueue<String> getQueueMessage() {
 		return queueMessage;
 	}
 
-	public synchronized void setQueueMessage(LinkedBlockingQueue<String> queueMessage) {
+	public void setQueueMessage(LinkedBlockingQueue<String> queueMessage) {
 		this.queueMessage = queueMessage;
 	}
 }

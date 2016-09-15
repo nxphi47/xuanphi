@@ -18,6 +18,14 @@ public class Main {
 		else if (args[0].equals("test")){
 			TestClient testClient = new TestClient();
 		}
+		else if (args[0].equals("threaded")){
+			if (args[1].equals("server")){
+				ServerThreaded serverThreaded = new ServerThreaded();
+			}
+			else {
+				ClientThreadedTest clientThreadedTest = new ClientThreadedTest();
+			}
+		}
 
 	}
 }

@@ -10,6 +10,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import static com.phi.GameControl.*;
+import static com.phi.GameControl.GameStatus.*;
+
 /**
  * Created by nxphi on 9/12/16.
  */
@@ -50,7 +53,7 @@ public class ClientTTT extends JFrame {
 	private int role = 0; // 1 = x, -1 = o, 0 = error
 	private int teamOther = 0; // the other role
 	private GameControl controller;
-	private GameControl.GameStatus status;
+	private GameStatus status;
 
 	// communication parameter
 	private ClientConnection connection;
@@ -200,12 +203,24 @@ public class ClientTTT extends JFrame {
 	public void updateResult(){
 		status = controller.updateResult();
 
-		if (ClientTTT.this.status != GameControl.GameStatus.DRAW) {
+		if (ClientTTT.this.status != DRAW) {
 			enterGame(false);
 
 			// debuging
 			if (Main.DEBUG)
-				System.out.printf(String.format("\nWin = %s", (ClientTTT.this.status == GameControl.GameStatus.XWIN) ? "X" : "O"));
+				System.out.printf(String.format("\nWin = %s", (ClientTTT.this.status == XWIN) ? "X" : "O"));
+		}
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 3; j++){
+				if (matrix[i][j] == 0) {
+					return;
+				}
+			}
+		}
+		// after for loop, no 0 means all draw
+		enterGame(false);
+		if (Main.DEBUG){
+			System.out.printf("\nGame Draw");
 		}
 	}
 
@@ -240,7 +255,22 @@ public class ClientTTT extends JFrame {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					String result = String.format("%s win.", (ClientTTT.this.status == GameControl.GameStatus.XWIN) ? "X" : "O");
+					//String result = String.format("%s win.", (ClientTTT.this.status == GameControl.GameStatus.XWIN) ? "X" : "O");
+					String result = "RESULT error";
+					switch (ClientTTT.this.status){
+						case XWIN:
+							result = "X win.";
+							break;
+						case OWIN:
+							result = "O win.";
+							break;
+						case DRAW:
+							result = "DRAW";
+							break;
+						default:
+							System.err.println("\nRESULT error");
+					}
+
 					statusLabel.setText(result);
 				}
 			});
