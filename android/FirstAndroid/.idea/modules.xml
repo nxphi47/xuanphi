@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/FirstAndroid.iml" filepath="$PROJECT_DIR$/.idea/modules/FirstAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/OpenCV-android-sdk/sdk/java/opencv.iml" filepath="$USER_HOME$/Downloads/OpenCV-android-sdk/sdk/java/opencv.iml" />
     </modules>
   </component>
 </project>

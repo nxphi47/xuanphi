@@ -21,10 +21,34 @@ public class GameGUIForm extends GameGUI{
 	private JLabel roleLabel;
 	private JLabel statusLabel;
 	private JProgressBar progressBar;
+	private int x = 0;
 
 	public GameGUIForm(GameController controller, String gameName){
 		super(controller, gameName);
 		setContentPane(mainPanel);
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				//int x = 0;
+				while (true){
+					if (GameGUIForm.this.x == 100){
+						GameGUIForm.this.x = 0;
+					}
+					try {
+						Thread.sleep(30);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							GameGUIForm.this.progressBar.setValue(GameGUIForm.this.x++);
+						}
+					});
+				}
+			}
+		}).start();
 
 		finalizeJFrame();
 	}

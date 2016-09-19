@@ -15,9 +15,10 @@ public abstract class GameGUI extends JFrame {
 
 	public GameGUI(GameController controller, String gameName){
 		super();
-		System.setProperty("sun.java2d.opengl", "true");
+		//System.setProperty("sun.java2d.opengl", "true");
 		setGameName(gameName);
 		setController(controller);
+
 
 
 		// finalize the JFrame
