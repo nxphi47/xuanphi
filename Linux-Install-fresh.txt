@@ -1,7 +1,17 @@
-install java openjdk-8-jre
+install java oracle jdk, jre to /usr/local/java/ //search link "replace openjdk with oracle jdk"
+install opengl for GUI java by: add to /usr/local/java/jdk....
+
+JAVA_HOME=/user/local/java/jdk1.8.0.101
+PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
+export JAVA_HOME
+export _JAVA_OPTIONS='-Dsun.java2d.opengl=true'
+export PATH
+
 install 3 IDE
 install ltp to power computer to limit overheating
-install python-matplotlib, python-numpy, python-scipy, python-libsvm, paramiko, 
+install python-matplotlib, python-numpy, python-scipy, python-libsvm, paramiko, python-dev, python setuptools
+install scikit-learn package
+install tensorflow
 install ibus-unikey
 install git-all
 install google chrome
@@ -10,7 +20,19 @@ http://www.linuxandubuntu.com/home/how-to-disable-touchpad-while-writing-article
 
 for C:
 install wiringPi
-
-install intell, pycharm, clion
+install GPIO
+install intellij, pycharm, clion
+install angularJS in pycharm and intellij
 
 install platformio for arduino
+
+install matlab at https://www.youtube.com/watch?v=50gryiqkgxw
+
+install skype
+install atom
+
+for opencv 2.4.13
+[compiler] sudo apt-get install build-essential
+[required] sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+[optional] sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+the youtube link

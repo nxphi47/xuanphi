@@ -25,8 +25,24 @@ public class Main{
 			Client client = new Client(inetAddress);
 			client.runClient();
 		}
-		else{
-			System.err.println("Wrong argument input\n");
+		else if (args[0].equals("-datagram")) {
+			new Thread(
+				new Runnable(){
+					@Override
+					public void run(){
+						ServerDatagram server = new ServerDatagram();
+					}
+				}
+			).start();
+
+			new Thread(
+				new Runnable(){
+					@Override
+					public void run(){
+						ClientDatagram client = new ClientDatagram();
+					}
+				}
+			).start();
 		}
 	}
 }

@@ -10,15 +10,7 @@ class Main {
 	public static FileSequential app;
 
 	public static void main(String[] args) throws ScriptException {
-		//PaintAppForm appForm = new PaintAppForm();
-
-
-		GUIBouncing app = new GUIBouncing();
-
-		BouncingThreading thread = new BouncingThreading(app.getBallList(), app.getPanel());
-
-		startThreadBouncing(thread);
-
+		PaintAppForm appForm = new PaintAppForm();
 	}
 
 	public static void startThreadBouncing(BouncingThreading th) {

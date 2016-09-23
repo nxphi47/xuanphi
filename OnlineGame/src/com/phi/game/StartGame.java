@@ -9,6 +9,8 @@ import com.phi.game.gui.GameGUIForm;
  */
 public class StartGame {
 	public static void main(String[] args) {
+		//System.setProperty("sun.java2d.opengl","true");
+
 		GameGUIForm form = new GameGUIForm(new TestController(), "hello wordl");
 
 	}

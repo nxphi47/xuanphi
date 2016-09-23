@@ -30,7 +30,7 @@ public class GameGUIForm extends GameGUI{
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				//int x = 0;
+				int x = 0;
 				while (true){
 					if (GameGUIForm.this.x == 100){
 						GameGUIForm.this.x = 0;
