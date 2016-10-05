@@ -1,7 +1,7 @@
 install java oracle jdk, jre to /usr/local/java/ //search link "replace openjdk with oracle jdk"
 install opengl for GUI java by: add to /usr/local/java/jdk....
 
----------------optional ------------------------------
+---------------optional -----oracle jdk-------------------------
 JAVA_HOME=/user/local/java/jdk1.8.0.101
 PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
 export JAVA_HOME
@@ -19,6 +19,9 @@ install tensorflow
 install ibus-unikey
 install git-all
 install google chrome
+isntall compiz control
+install tweak tool
+
 disable touchpad: syndaemon -i 1 -K -d
 http://www.linuxandubuntu.com/home/how-to-disable-touchpad-while-writing-article-or-documentation-in-ubuntulinux-mint-or-derivatives-linux
 
@@ -41,7 +44,7 @@ for opencv 2.4.13
 the youtube link
 
 -----------------------------------------------
-opencv 3.0
+opencv 3.0 -- with clion
 http://www.pyimagesearch.com/2015/06/22/install-opencv-3-0-and-python-2-7-on-ubuntu/
 |||||
 Update & upgrade packages:
@@ -85,3 +88,23 @@ Music by Katherine Cordova & Coldplay
 ----------------------
 others 
 https://community.linuxmint.com/tutorial/view/1884
+sudo apt-get install touchegg
+download touchegg gce
+sudo apt-get install build-essential libqt4-dev libx11-6 libx11-dev
+cd ~/Downloads
+unzip Touchegg-gce-master.zip
+cd Touchegg-gce-master
+qmake
+make && sudo make install
+/////// remove every thing in synclient
+create ~/.xprofile
+ synclient TapButton2=0
+ synclient TapButton3=0
+ synclient ClickFinger2=0
+ synclient ClickFinger3=0
+ synclient HorizTwoFingerScroll=0
+ synclient VertTwoFingerScroll=0
+touchegg &
+///////////////
+
+
