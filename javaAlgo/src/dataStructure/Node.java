@@ -1,14 +1,13 @@
 package dataStructure;
 
-import java.security.PublicKey;
-import java.util.Comparator;
 
 /**
  * Created by nxphi47 on 10/26/16.
  */
-public class Node<T extends Comparable<T> > implements Comparable<Node> {
+public class Node<T extends Comparable<T> > implements Comparable<Node>, Cloneable {
 	private T value;
 	private int index;
+	private int marker;
 	private T secValue;
 	private Node left;
 	private Node right;
@@ -21,6 +20,19 @@ public class Node<T extends Comparable<T> > implements Comparable<Node> {
 		this.right = right;
 		this.top = top;
 		this.index = index;
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Node<T> clone = new Node<T>();
+		clone.setMarker(marker);
+		clone.setIndex(index);
+		clone.setValue(value);
+		clone.setSecValue(secValue);
+		//clone.setLeft(left);
+		//clone.setRight(right);
+		//clone.setTop(top);
+		return clone;
 	}
 
 	@Override
@@ -92,7 +104,7 @@ public class Node<T extends Comparable<T> > implements Comparable<Node> {
 		this.secValue = secValue;
 	}
 
-	public Node getLeft() {
+	public Node<T> getLeft() {
 		return left;
 	}
 
@@ -100,7 +112,7 @@ public class Node<T extends Comparable<T> > implements Comparable<Node> {
 		this.left = left;
 	}
 
-	public Node getRight() {
+	public Node<T> getRight() {
 		return right;
 	}
 
@@ -109,11 +121,19 @@ public class Node<T extends Comparable<T> > implements Comparable<Node> {
 	}
 
 
-	public Node getTop() {
+	public Node<T> getTop() {
 		return top;
 	}
 
 	public void setTop(Node top) {
 		this.top = top;
+	}
+
+	public int getMarker() {
+		return marker;
+	}
+
+	public void setMarker(int marker) {
+		this.marker = marker;
 	}
 }

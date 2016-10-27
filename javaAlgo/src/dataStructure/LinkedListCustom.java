@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * Created by nxphi47 on 10/26/16.
  */
-public class LinkedListCustom<T extends Comparable<T>> extends LinkedList<Comparable<T>> {
+public class LinkedListCustom<T> extends LinkedList<T> {
 
 	@Override
 	public boolean contains(Object o) {

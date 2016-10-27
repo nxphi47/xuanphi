@@ -9,7 +9,8 @@ public class Main {
 
 
 	public static void main(String[] args) throws Exception {
-		graphFunc();
+
+		graphWeighted();
 	}
 
 	public static int powerRecursive(int i, int n){
@@ -29,16 +30,18 @@ public class Main {
 	}
 
 	public interface Method {
-		void function1(Node node);
-		void function2(Node prev, Node target);
+		boolean visitNow(Node node); // to be visited right now
+		boolean visitAfter(Node prev, Node target); // put to list to be visited
 	}
 
 	public static class MethodSet {
-		public void print(Integer i){
+		public boolean print(Integer i){
 			System.out.printf("%d ", i);
+			return true;
 		}
-		public void printSQ(Integer i){
+		public boolean printSQ(Integer i){
 			System.out.printf("%d ",i * i);
+			return true;
 		}
 	}
 
@@ -82,8 +85,95 @@ public class Main {
 
 	}
 
+	public static void graphWeighted() throws Exception{
+		Graph<String> graph = new Graph<>(false, true);
+		graph.addNode("A");
+		graph.addNode("B");
+		graph.addNode("C");
+		graph.addNode("D");
+		graph.addNode("E");
+		graph.addNode("F");
+
+		// add edge with weight
+		graph.addEdge("A", "B", 80);
+		graph.addEdge("A", "C", 40);
+		graph.addEdge("A", "E", 60);
+		graph.addEdge("B", "D", 100);
+		graph.addEdge("C", "D", 20);
+		graph.addEdge("C", "E", 120);
+		graph.addEdge("C", "F", 60);
+		graph.addEdge("D", "F", 120);
+		graph.addEdge("E", "F", 40);
+
+		graph.printGraph();
+
+		Graph<String> spt = new Graph<>(false, true);
+		graph.shortedPath("A", spt, null);
+		spt.printGraph();
+		//System.out.printf(String.valueOf(graph.getSizeEdge(false)));
+	}
+
+	public static void graphTopoSort() throws Exception {
+		Graph_back<String> graphBack = new Graph_back<>(8);
+		graphBack.addNode("A");
+		graphBack.addNode("B");
+		graphBack.addNode("C");
+		graphBack.addNode("E");
+		graphBack.addNode("F");
+		graphBack.addNode("G");
+		graphBack.addNode("H");
+		graphBack.addNode("D");
+		// edge
+		graphBack.addEdge("A", "E", true);
+		graphBack.addEdge("A", "D", true);
+		graphBack.addEdge("B", "E", true);
+		graphBack.addEdge("C", "A", true);
+		graphBack.addEdge("C", "B", true);
+		graphBack.addEdge("C", "G", true);
+		graphBack.addEdge("C", "F", true);
+		graphBack.addEdge("D", "F", true);
+		graphBack.addEdge("D", "E", true);
+		graphBack.addEdge("E", "F", true);
+		graphBack.addEdge("F", "H", true);
+
+		graphBack.printGraph();
+		System.out.printf("\nToposort: %s", graphBack.topologicalSort());
+	}
+
+	public static void graphTopoSort(int test) throws Exception {
+		Graph_back<Integer> graphBack = new Graph_back<>(13);
+		for (int i = 13;i >= 5; i--){
+			graphBack.addNode(i);
+		}
+		for (int i = 1; i <5; i++){
+			graphBack.addNode(i);
+		}
+		// add end;
+		graphBack.addEdge(1, 2, true);
+		graphBack.addEdge(1, 3, true);
+		graphBack.addEdge(2, 4, true);
+		graphBack.addEdge(2, 5, true);
+		graphBack.addEdge(3, 6, true);
+		graphBack.addEdge(3, 7, true);
+		graphBack.addEdge(4, 8, true);
+		graphBack.addEdge(5, 9, true);
+		graphBack.addEdge(5, 10, true);
+		graphBack.addEdge(6, 10, true);
+		graphBack.addEdge(7, 12, true);
+		graphBack.addEdge(8, 11, true);
+		graphBack.addEdge(9, 11, true);
+		graphBack.addEdge(10, 12, true);
+		graphBack.addEdge(11, 13, true);
+		graphBack.addEdge(12, 13, true);
+
+		// pring graphBack
+		graphBack.printGraph();
+
+		System.out.printf("\nToposort: %s", graphBack.topologicalSort());
+	}
+
 	public static void graphFunc() throws Exception {
-		Graph<String> graph = new Graph<>(10);
+		Graph<String> graph = new Graph<>(false, false);
 		graph.addNode("A");
 		graph.addNode("B");
 		graph.addNode("C");
@@ -93,54 +183,45 @@ public class Main {
 		graph.addNode("G");
 		graph.addNode("H");
 
-		graph.addPath("A", "C");
-		graph.addPath("B", "D");
-		graph.addPath("D", "C");
-		graph.addPath("D", "E");
-		graph.addPath("A", "F");
-		graph.addPath("A", "G");
-		graph.addPath("F", "H");
-		graph.addPath("G", "H");
+		graph.addEdge("A", "C");
+		graph.addEdge("B", "D");
+		graph.addEdge("D", "C");
+		graph.addEdge("D", "E");
+		graph.addEdge("A", "F");
+		graph.addEdge("A", "G");
+		graph.addEdge("F", "H");
+		graph.addEdge("G", "H");
 		graph.printGraph();
 
 		System.out.printf("\n");
-		ArrayList<Node<String>> list = graph.depthFirstSearch("C", new Method() {
+		System.out.printf("%s %s\n", graph.getSizeNode(), graph.getSizeEdge());
+		System.out.printf("%s %s\n", graph.getNodeByIndex(2), graph.getNodeByNode(new Node<>("C")));
+
+		ArrayList<Node<String>> list = graph.breadthFirstSearch("C", new Method() {
 			@Override
-			public void function1(Node node) {
-				return;
+			public boolean visitNow(Node node) {
+				return true;
 			}
 
 			@Override
-			public void function2(Node prev, Node target) {
-				return;
-			}
-		});
-		System.out.printf("\nsequence depth: %s", list);
-
-		// shorted part
-		HashMap<String, Integer> lengths = new HashMap<>();
-		list = graph.breadthFirstSearch("C", new Method() {
-			boolean lock = false;
-			@Override
-			public void function1(Node node) {
-				if (!lock){
-					lengths.put((String) node.getValue(), 0);
-					lock = !lock;
-				}
-			}
-
-			@Override
-			public void function2(Node prev, Node target) {
-				if (!lengths.containsKey(target.getValue())){
-
-					lengths.put((String) target.getValue(), lengths.get(prev.getValue()) + 1);
-				}
+			public boolean visitAfter(Node prev, Node target) {
+				return true;
 			}
 		});
 
+		System.out.printf("\nsequence Breadth: %s", list);
+		list = graph.depthFirstSearch("A", new Method() {
+			@Override
+			public boolean visitNow(Node node) {
+				return true;
+			}
 
+			@Override
+			public boolean visitAfter(Node prev, Node target) {
+				return true;
+			}
+		})	;
 		System.out.printf("\nsequence breadth: %s", list);
-		System.out.printf("\nShorted part: %s", lengths);
 	}
 
 	public static void printList(List list, String name){

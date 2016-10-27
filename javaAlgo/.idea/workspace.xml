@@ -21,20 +21,24 @@
     <favorites_list name="javaAlgo" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.57906294">
+    <splitter split-orientation="horizontal" split-proportion="0.4033675">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/Main.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="31">
-                  <caret line="119" column="23" selection-start-line="119" selection-start-column="23" selection-end-line="119" selection-end-column="23" />
+                <state relative-caret-position="131">
+                  <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
                   <folding>
                     <element signature="imports" expanded="true" />
-                    <element signature="e#2239#2240#0" expanded="true" />
-                    <element signature="e#2256#2257#0" expanded="true" />
-                    <element signature="e#2321#2322#0" expanded="true" />
-                    <element signature="e#2338#2339#0" expanded="true" />
+                    <element signature="e#5017#5018#0" expanded="true" />
+                    <element signature="e#5039#5040#0" expanded="true" />
+                    <element signature="e#5108#5109#0" expanded="true" />
+                    <element signature="e#5130#5131#0" expanded="true" />
+                    <element signature="e#5295#5296#0" expanded="true" />
+                    <element signature="e#5317#5318#0" expanded="true" />
+                    <element signature="e#5386#5387#0" expanded="true" />
+                    <element signature="e#5408#5409#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -43,8 +47,23 @@
           <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/dataStructure/Node.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="666">
-                  <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+                <state relative-caret-position="378">
+                  <caret line="123" column="17" selection-start-line="123" selection-start-column="17" selection-end-line="123" selection-end-column="17" />
+                  <folding>
+                    <element signature="e#2300#2301#0" expanded="true" />
+                    <element signature="e#2320#2321#0" expanded="true" />
+                    <element signature="e#2358#2359#0" expanded="true" />
+                    <element signature="e#2385#2386#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="LinkedListCustom.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/dataStructure/LinkedListCustom.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="162">
+                  <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -52,11 +71,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Graph.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/dataStructure/Graph.java">
+          <file leaf-file-name="WeightedGraphBack.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/dataStructure/WeightedGraphBack.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="157">
-                  <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+                <state relative-caret-position="443">
+                  <caret line="94" column="51" selection-start-line="94" selection-start-column="51" selection-end-line="94" selection-end-column="51" />
                   <folding />
                 </state>
               </provider>
@@ -69,7 +88,7 @@
           <file leaf-file-name="Sortation.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/dataStructure/Sortation.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1908">
+                <state relative-caret-position="713">
                   <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -78,12 +97,44 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="Graph_back.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/dataStructure/Graph_back.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-1494">
+                  <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="Graph.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/dataStructure/Graph.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="259">
-                  <caret line="109" column="27" selection-start-line="109" selection-start-column="27" selection-end-line="109" selection-end-column="27" />
-                  <folding />
+                <state relative-caret-position="470">
+                  <caret line="278" column="0" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#503#504#0" expanded="true" />
+                    <element signature="e#534#535#0" expanded="true" />
+                    <element signature="e#582#583#0" expanded="true" />
+                    <element signature="e#601#602#0" expanded="true" />
+                    <element signature="e#659#660#0" expanded="true" />
+                    <element signature="e#684#685#0" expanded="true" />
+                    <element signature="e#728#729#0" expanded="true" />
+                    <element signature="e#750#751#0" expanded="true" />
+                    <element signature="e#807#808#0" expanded="true" />
+                    <element signature="e#838#839#0" expanded="true" />
+                    <element signature="e#1000#1001#0" expanded="true" />
+                    <element signature="e#1031#1032#0" expanded="true" />
+                    <element signature="e#1063#1064#0" expanded="true" />
+                    <element signature="e#1087#1088#0" expanded="true" />
+                    <element signature="e#1133#1134#0" expanded="true" />
+                    <element signature="e#1161#1162#0" expanded="true" />
+                    <element signature="e#1193#1194#0" expanded="true" />
+                    <element signature="e#1217#1218#0" expanded="true" />
+                    <element signature="e#1263#1264#0" expanded="true" />
+                    <element signature="e#1291#1292#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -108,11 +159,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/dataStructure/LinkedListCustom.java" />
-        <option value="$PROJECT_DIR$/src/dataStructure/Node.java" />
         <option value="$PROJECT_DIR$/src/dataStructure/Sortation.java" />
-        <option value="$PROJECT_DIR$/src/dataStructure/Graph.java" />
+        <option value="$PROJECT_DIR$/src/dataStructure/WeightedGraph.java" />
+        <option value="$PROJECT_DIR$/src/dataStructure/WeightedGraphBack.java" />
+        <option value="$PROJECT_DIR$/src/dataStructure/LinkedListCustom.java" />
+        <option value="$PROJECT_DIR$/src/dataStructure/Graph_back.java" />
         <option value="$PROJECT_DIR$/src/main/Main.java" />
+        <option value="$PROJECT_DIR$/src/dataStructure/Node.java" />
+        <option value="$PROJECT_DIR$/src/dataStructure/Graph.java" />
       </list>
     </option>
   </component>
@@ -123,8 +177,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="y" value="21" />
     <option name="width" value="1366" />
-    <option name="height" value="768" />
+    <option name="height" value="747" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -151,18 +206,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane />
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager" selected="Application.Main (1)">
     <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true">
@@ -638,41 +693,42 @@
       <workItem from="1477470102199" duration="84000" />
       <workItem from="1477470219161" duration="21133000" />
       <workItem from="1477502589475" duration="1198000" />
+      <workItem from="1477540004266" duration="22613000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29742000" />
+    <option name="totallyTimeSpent" value="52355000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1366" height="768" extended-state="6" />
+    <frame x="0" y="21" width="1366" height="747" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904148" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2832618" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2625" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11493412" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904148" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27638888" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36194563" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -688,7 +744,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="9" />
+      <option name="time" value="16" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -699,14 +755,18 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1692">
-          <caret line="100" column="32" selection-start-line="100" selection-start-column="32" selection-end-line="100" selection-end-column="32" />
+        <state relative-caret-position="1962">
+          <caret line="119" column="23" selection-start-line="119" selection-start-column="23" selection-end-line="119" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2239#2240#0" expanded="true" />
-            <element signature="e#2256#2257#0" expanded="true" />
-            <element signature="e#2321#2322#0" expanded="true" />
-            <element signature="e#2338#2339#0" expanded="true" />
+            <element signature="e#5017#5018#0" expanded="true" />
+            <element signature="e#5039#5040#0" expanded="true" />
+            <element signature="e#5108#5109#0" expanded="true" />
+            <element signature="e#5130#5131#0" expanded="true" />
+            <element signature="e#5295#5296#0" expanded="true" />
+            <element signature="e#5317#5318#0" expanded="true" />
+            <element signature="e#5386#5387#0" expanded="true" />
+            <element signature="e#5408#5409#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -716,7 +776,10 @@
         <state relative-caret-position="666">
           <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2300#2301#0" expanded="true" />
+            <element signature="e#2320#2321#0" expanded="true" />
+            <element signature="e#2358#2359#0" expanded="true" />
+            <element signature="e#2385#2386#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -731,7 +794,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStructure/Graph.java">
+    <entry file="file://$PROJECT_DIR$/src/dataStructure/Graph_back.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1890">
+          <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1692">
+          <caret line="100" column="32" selection-start-line="100" selection-start-column="32" selection-end-line="100" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5017#5018#0" expanded="true" />
+            <element signature="e#5039#5040#0" expanded="true" />
+            <element signature="e#5108#5109#0" expanded="true" />
+            <element signature="e#5130#5131#0" expanded="true" />
+            <element signature="e#5295#5296#0" expanded="true" />
+            <element signature="e#5317#5318#0" expanded="true" />
+            <element signature="e#5386#5387#0" expanded="true" />
+            <element signature="e#5408#5409#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStructure/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding>
+            <element signature="e#2300#2301#0" expanded="true" />
+            <element signature="e#2320#2321#0" expanded="true" />
+            <element signature="e#2358#2359#0" expanded="true" />
+            <element signature="e#2385#2386#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStructure/Sortation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1908">
+          <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStructure/Graph_back.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="972">
           <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
@@ -745,10 +857,14 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2239#2240#0" expanded="true" />
-            <element signature="e#2256#2257#0" expanded="true" />
-            <element signature="e#2321#2322#0" expanded="true" />
-            <element signature="e#2338#2339#0" expanded="true" />
+            <element signature="e#5017#5018#0" expanded="true" />
+            <element signature="e#5039#5040#0" expanded="true" />
+            <element signature="e#5108#5109#0" expanded="true" />
+            <element signature="e#5130#5131#0" expanded="true" />
+            <element signature="e#5295#5296#0" expanded="true" />
+            <element signature="e#5317#5318#0" expanded="true" />
+            <element signature="e#5386#5387#0" expanded="true" />
+            <element signature="e#5408#5409#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -758,7 +874,10 @@
         <state relative-caret-position="234">
           <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2300#2301#0" expanded="true" />
+            <element signature="e#2320#2321#0" expanded="true" />
+            <element signature="e#2358#2359#0" expanded="true" />
+            <element signature="e#2385#2386#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -781,8 +900,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStructure/LinkedListCustom.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="39" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+        <state relative-caret-position="162">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStructure/Graph_back.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1494">
+          <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStructure/WeightedGraphBack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="94" column="51" selection-start-line="94" selection-start-column="51" selection-end-line="94" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStructure/Sortation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="713">
+          <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -791,42 +936,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStructure/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+        <state relative-caret-position="378">
+          <caret line="123" column="17" selection-start-line="123" selection-start-column="17" selection-end-line="123" selection-end-column="17" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2300#2301#0" expanded="true" />
+            <element signature="e#2320#2321#0" expanded="true" />
+            <element signature="e#2358#2359#0" expanded="true" />
+            <element signature="e#2385#2386#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStructure/Sortation.java">
+    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1908">
-          <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+        <state relative-caret-position="131">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#5017#5018#0" expanded="true" />
+            <element signature="e#5039#5040#0" expanded="true" />
+            <element signature="e#5108#5109#0" expanded="true" />
+            <element signature="e#5130#5131#0" expanded="true" />
+            <element signature="e#5295#5296#0" expanded="true" />
+            <element signature="e#5317#5318#0" expanded="true" />
+            <element signature="e#5386#5387#0" expanded="true" />
+            <element signature="e#5408#5409#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStructure/Graph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31">
-          <caret line="119" column="23" selection-start-line="119" selection-start-column="23" selection-end-line="119" selection-end-column="23" />
+        <state relative-caret-position="470">
+          <caret line="278" column="0" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2239#2240#0" expanded="true" />
-            <element signature="e#2256#2257#0" expanded="true" />
-            <element signature="e#2321#2322#0" expanded="true" />
-            <element signature="e#2338#2339#0" expanded="true" />
+            <element signature="e#503#504#0" expanded="true" />
+            <element signature="e#534#535#0" expanded="true" />
+            <element signature="e#582#583#0" expanded="true" />
+            <element signature="e#601#602#0" expanded="true" />
+            <element signature="e#659#660#0" expanded="true" />
+            <element signature="e#684#685#0" expanded="true" />
+            <element signature="e#728#729#0" expanded="true" />
+            <element signature="e#750#751#0" expanded="true" />
+            <element signature="e#807#808#0" expanded="true" />
+            <element signature="e#838#839#0" expanded="true" />
+            <element signature="e#1000#1001#0" expanded="true" />
+            <element signature="e#1031#1032#0" expanded="true" />
+            <element signature="e#1063#1064#0" expanded="true" />
+            <element signature="e#1087#1088#0" expanded="true" />
+            <element signature="e#1133#1134#0" expanded="true" />
+            <element signature="e#1161#1162#0" expanded="true" />
+            <element signature="e#1193#1194#0" expanded="true" />
+            <element signature="e#1217#1218#0" expanded="true" />
+            <element signature="e#1263#1264#0" expanded="true" />
+            <element signature="e#1291#1292#0" expanded="true" />
           </folding>
         </state>
       </provider>
