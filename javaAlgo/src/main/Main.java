@@ -9,9 +9,16 @@ public class Main {
 
 
 	public static void main(String[] args) throws Exception {
-
-		graphWeighted();
+//		ConnectedCellGrid cellGrid = new ConnectedCellGrid(true);
+		Pairs pairs = new Pairs(false);
 	}
+
+	public static int appointRegion(int[][] mainArr, int[][] regArr, int[][] marker, int i, int j){
+
+		return 0;
+	}
+
+
 
 	public static int powerRecursive(int i, int n){
 		if (n == 0){
@@ -111,65 +118,6 @@ public class Main {
 		graph.shortedPath("A", spt, null);
 		spt.printGraph();
 		//System.out.printf(String.valueOf(graph.getSizeEdge(false)));
-	}
-
-	public static void graphTopoSort() throws Exception {
-		Graph_back<String> graphBack = new Graph_back<>(8);
-		graphBack.addNode("A");
-		graphBack.addNode("B");
-		graphBack.addNode("C");
-		graphBack.addNode("E");
-		graphBack.addNode("F");
-		graphBack.addNode("G");
-		graphBack.addNode("H");
-		graphBack.addNode("D");
-		// edge
-		graphBack.addEdge("A", "E", true);
-		graphBack.addEdge("A", "D", true);
-		graphBack.addEdge("B", "E", true);
-		graphBack.addEdge("C", "A", true);
-		graphBack.addEdge("C", "B", true);
-		graphBack.addEdge("C", "G", true);
-		graphBack.addEdge("C", "F", true);
-		graphBack.addEdge("D", "F", true);
-		graphBack.addEdge("D", "E", true);
-		graphBack.addEdge("E", "F", true);
-		graphBack.addEdge("F", "H", true);
-
-		graphBack.printGraph();
-		System.out.printf("\nToposort: %s", graphBack.topologicalSort());
-	}
-
-	public static void graphTopoSort(int test) throws Exception {
-		Graph_back<Integer> graphBack = new Graph_back<>(13);
-		for (int i = 13;i >= 5; i--){
-			graphBack.addNode(i);
-		}
-		for (int i = 1; i <5; i++){
-			graphBack.addNode(i);
-		}
-		// add end;
-		graphBack.addEdge(1, 2, true);
-		graphBack.addEdge(1, 3, true);
-		graphBack.addEdge(2, 4, true);
-		graphBack.addEdge(2, 5, true);
-		graphBack.addEdge(3, 6, true);
-		graphBack.addEdge(3, 7, true);
-		graphBack.addEdge(4, 8, true);
-		graphBack.addEdge(5, 9, true);
-		graphBack.addEdge(5, 10, true);
-		graphBack.addEdge(6, 10, true);
-		graphBack.addEdge(7, 12, true);
-		graphBack.addEdge(8, 11, true);
-		graphBack.addEdge(9, 11, true);
-		graphBack.addEdge(10, 12, true);
-		graphBack.addEdge(11, 13, true);
-		graphBack.addEdge(12, 13, true);
-
-		// pring graphBack
-		graphBack.printGraph();
-
-		System.out.printf("\nToposort: %s", graphBack.topologicalSort());
 	}
 
 	public static void graphFunc() throws Exception {
