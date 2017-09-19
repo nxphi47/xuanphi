@@ -8,6 +8,15 @@ import java.util.regex.Matcher;
 public class Main {
 	public static long hanoiTimes = 0;
 
+	public static void main(String[] args) throws Exception {
+
+
+		ValidParentheses validParentheses = new ValidParentheses();
+
+//		rungeKutaMultiple(3, 3, 2, 0.1, 3);
+	}
+
+
 	public static double funcRungeKuta(double x, double y){
 		return 1/x + 2 * y;
 	}
@@ -105,11 +114,7 @@ public class Main {
 		return y;
 	}
 
-	public static void main(String[] args) throws Exception {
 
-
-		rungeKutaMultiple(3, 3, 2, 0.1, 3);
-	}
 
 
 
